@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="registrationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="state">State:</label>
+        <select id="state" name="state" onchange="populateCities()" required>
+            <option value="">Select State</option>
+            <!-- Add your state options here -->
+            <option value="state1">State 1</option>
+            <option value="state2">State 2</option>
+            <!-- Add more states as needed -->
+        </select>
+
+        <label for="city">City:</label>
+        <select id="city" name="city" onchange="populateAreas()" required>
+            <option value="">Select City</option>
+            <!-- Cities will be populated dynamically based on the selected state -->
+        </select>
+
+        <label for="area">Area:</label>
+        <select id="area" name="area" required>
+            <option value="">Select Area</option>
+            <!-- Areas will be populated dynamically based on the selected city -->
+        </select>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="hobbies">Hobbies:</label>
+        <input type="text" id="hobbies" name="hobbies" required>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <table id="displayTable" style="display:none;"></table>
+
+    <script>
+        function populateCities() {
+            var state = document.getElementById("state").value;
+            var citySelect = document.getElementById("city");
+            // Clear existing options
+            citySelect.innerHTML = "<option value=''>Select City</option>";
+
+            // Add new options based on the selected state
+            if (state === "state1") {
+                citySelect.innerHTML += "<option value='city1'>City 1</option>";
+                citySelect.innerHTML += "<option value='city2'>City 2</option>";
+                // Add more cities as needed
+            } else if (state === "state2") {
+                citySelect.innerHTML += "<option value='city3'>City 3</option>";
+                citySelect.innerHTML += "<option value='city4'>City 4</option>";
+                // Add more cities as needed
+            }
+            // Add more conditions for other states
+        }
+
+        function populateAreas() {
+            var city = document.getElementById("city").value;
+            var areaSelect = document.getElementById("area");
+            // Clear existing options
+            areaSelect.innerHTML = "<option value=''>Select Area</option>";
+
+            // Add new options based on the selected city
+            if (city === "city1") {
+                areaSelect.innerHTML += "<option value='area1'>Area 1</option>";
+                areaSelect.innerHTML += "<option value='area2'>Area 2</option>";
+                // Add more areas as needed
+            } else if (city === "city2") {
+                areaSelect.innerHTML += "<option value='area3'>Area 3</option>";
+                areaSelect.innerHTML += "<option value='area4'>Area 4</option>";
+                // Add more areas as needed
+            }
+            // Add more conditions for other cities
+        }
+
+        function submitForm() {
+            var form = document.getElementById("registrationForm");
+            var table = document.getElementById("displayTable");
+            var newRow = table.insertRow(table.rows.length);
+
+            for (var i = 0; i < form.elements.length - 1; i++) {
+                var cell = newRow.insertCell(i);
+                cell.innerHTML = form.elements[i].value;
+            }
+
+            table.style.display = "table";
+            form.reset();
+        }
+    </script>
+
+</body>
+</html>
