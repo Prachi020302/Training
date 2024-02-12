@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Report</title>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+    <table id="resulttable">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Department</th>
+                <th>Computer Networks</th>
+                <th>DBMS</th>
+                <th>AI</th>
+                <th>Python Programming</th>
+                <th>Total Marks</th>
+                <th>Percentage</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        var data = [
+            {
+                "UserName": "Viral Patel",
+                "Department": "Computer Science",
+                "MarksObtained": {
+                    "ComputerNetworks": 85,
+                    "DBMS": 89,
+                    "AI": 90,
+                    "Pyhton Programming": 86
+                }
+            },
+            {
+                "UserName": "Krunal Chauhan",
+                "Department": "Information Technology",
+                "MarksObtained": {
+                    "ComputerNetworks": 85,
+                    "DBMS": 83,
+                    "AI": 82,
+                    "Pyhton Programming": 81
+                }
+            },
+            {
+                "UserName": "Saumya Shah",
+                "Department": "Computer Science",
+                "MarksObtained": {
+                    "ComputerNetworks": 69,
+                    "DBMS": 65,
+                    "AI": 67,
+                    "Pyhton Programming": 72
+                }
+            },
+            {
+                "UserName": "Nisarg Patel",
+                "Department": "Information Technology",
+                "MarksObtained": {
+                    "ComputerNetworks": 50,
+                    "DBMS": 45,
+                    "AI": 35,
+                    "Pyhton Programming": 40
+                }
+            }
+        ];
+
+        var tableBody = document.querySelector('#resulttable tbody');
+
+        data.forEach(function(student) {
+            var row = document.createElement('tr');
+            row.id = 'row-' + student.UserName;
+
+            var totalMarks = Object.values(student.MarksObtained).reduce((a, b) => a + b, 0);
+            var percentage = totalMarks / 4;
+            var grade;
+
+            if (percentage >= 85) {
+                grade = 'A';
+            } else if (percentage >= 70 && percentage <= 85) {
+                grade = 'B';
+            } else if (percentage >= 50 && percentage < 70) {
+                grade = 'C';
+            } else {
+                grade = 'D';
+            }
+
+            row.innerHTML = `
+                <td>${student.UserName}</td>
+                <td>${student.Department}</td>
+                <td>${student.MarksObtained.ComputerNetworks}</td>
+                <td>${student.MarksObtained.DBMS}</td>
+                <td>${student.MarksObtained.AI}</td>
+                <td>${student.MarksObtained['Pyhton Programming']}</td>
+                <td>${totalMarks}</td>
+                <td>${percentage.toFixed(2)}%</td>
+                <td>${grade}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
