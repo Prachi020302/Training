@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basic Math Operations</title>
+<style>
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"], input[type="radio"] {
+        margin-bottom: 10px;
+    }
+    #result {
+        margin-top: 10px;
+    }
+    .error {
+        color: red;
+    }
+</style>
+</head>
+<body>
+    <label for="firstnumber">Please enter first number:</label>
+    <input type="text" id="firstnumber"><div class="error" id="firstnumber-error"></div>
+
+    <label for="secondnumber">Please enter second number:</label>
+    <input type="text" id="secondnumber"><div class="error" id="secondnumber-error"></div>
+
+    <label>Please select operation you want to perform:</label>
+    <input type="radio" name="operation" value="addition"> Addition<br>
+    <input type="radio" name="operation" value="subtraction"> Subtraction<br>
+    <input type="radio" name="operation" value="multiplication"> Multiplication<br>
+    <input type="radio" name="operation" value="division"> Division<br>
+    <div class="error" id="operation-error"></div>
+
+    <button id="getresult">Calculate</button>
+    <button id="reset">Reset</button>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("getresult").addEventListener("click", function() {
+            // Clear previous errors
+            document.getElementById("firstnumber-error").innerText = "";
+            document.getElementById("secondnumber-error").innerText = "";
+            document.getElementById("operation-error").innerText = "";
+            document.getElementById("result").innerText = "";
+
+            // Fetching input values
+            var firstNumber = parseFloat(document.getElementById("firstnumber").value);
+            var secondNumber = parseFloat(document.getElementById("secondnumber").value);
+            var operation = document.querySelector('input[name="operation"]:checked');
+
+            // Validations
+            var errors = false;
+            if (isNaN(firstNumber)) {
+                document.getElementById("firstnumber-error").innerText = "Please enter valid number";
+                errors = true;
+            }
+            if (isNaN(secondNumber)) {
+                document.getElementById("secondnumber-error").innerText = "Please enter valid number";
+                errors = true;
+            }
+            if (!operation) {
+                document.getElementById("operation-error").innerText = "Select any of the operation";
+                errors = true;
+            }
+
+            // If there are errors, stop further execution
+            if (errors) {
+                return;
+            }
+
+            // Calculating result based on selected operation
+            var result;
+            switch (operation.value) {
+                case "addition":
+                    result = firstNumber + secondNumber;
+                    break;
+                case "subtraction":
+                    result = firstNumber - secondNumber;
+                    break;
+                case "multiplication":
+                    result = firstNumber * secondNumber;
+                    break;
+                case "division":
+                    result = firstNumber / secondNumber;
+                    break;
+            }
+
+            // Displaying result
+            document.getElementById("result").innerText = "Result is: " + result;
+        });
+
+        // Reset button functionality
+        document.getElementById("reset").addEventListener("click", function() {
+            document.getElementById("firstnumber").value = "";
+            document.getElementById("secondnumber").value = "";
+            document.getElementById("result").innerText = "";
+            document.getElementById("firstnumber-error").innerText = "";
+            document.getElementById("secondnumber-error").innerText = "";
+            document.getElementById("operation-error").innerText = "";
+            document.querySelectorAll('input[name="operation"]').forEach(function(radio) {
+                radio.checked = false;
+            });
+        });
+    </script>
+</body>
+</html>
