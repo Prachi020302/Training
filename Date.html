@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Date Validation</title>
+</head>
+<body>
+    <label for="date">Please enter date in MM-DD-YYYY format:</label>
+    <input type="text" id="date" placeholder="MM-DD-YYYY">
+    <div id="error" style="color: red;"></div>
+
+    <button onclick="validateDate()">Validate Date</button>
+
+    <script>
+        function validateDate() {
+            var inputDate = document.getElementById("date").value;
+            var errorDiv = document.getElementById("error");
+            errorDiv.innerText = "";
+
+            // Check if entered date matches the required format
+            var dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+            if (!dateRegex.test(inputDate)) {
+                errorDiv.innerText = "Invalid date format. Please enter date in MM-DD-YYYY format";
+                return;
+            }
+
+            // Parse date components
+            var dateParts = inputDate.split("-");
+            var month = parseInt(dateParts[0], 10);
+            var day = parseInt(dateParts[1], 10);
+            var year = parseInt(dateParts[2], 10);
+
+            // Check if month is within the range 1 to 12
+            if (month < 1 || month > 12) {
+                errorDiv.innerText = "Invalid month. Month should be within the range 1 to 12";
+                return;
+            }
+
+            // Check if day is within the range 1 to 31
+            if (day < 1 || day > 31) {
+                errorDiv.innerText = "Invalid day. Day should be within the range 1 to 31";
+                return;
+            }
+
+            // Check for specific month-day combinations
+            if ((month === 4 || month === 6 || month === 9 || month === 11) && day > 30) {
+                errorDiv.innerText = "Invalid day. Month of " + getMonthName(month) + " cannot have more than 30 days";
+                return;
+            } else if (month === 2) {
+                var maxDays = (isLeapYear(year)) ? 29 : 28;
+                if (day > maxDays) {
+                    errorDiv.innerText = "Invalid day. Month of February cannot have more than " + maxDays + " days";
+                    return;
+                }
+            }
+
+            // If all checks passed, display success message
+            errorDiv.style.color = "green";
+            errorDiv.innerText = "You have entered a valid date: " + inputDate + ". Thank you!";
+        }
+
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+
+        function getMonthName(month) {
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            return months[month - 1];
+        }
+    </script>
+</body>
+</html>
