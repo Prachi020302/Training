@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice</title>
+</head>
+<body>
+    <div id="displaydata">
+        <h2>Seller Details:</h2>
+        <div id="selleraddress"></div>
+        <h2>Bill To:</h2>
+        <div id="billto"></div>
+        <h2>Item Details:</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Tax</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="itemdetails">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var sampleJson = [
+            {
+                "SellerDetails": {
+                    "SellerName": "Ravi Gupta",
+                    "SellerAddress": "Surdhara Complex, Naranpura",
+                    "City": "Ahmedabad",
+                    "State": "Gujarat",
+                    "Zip": 382481,
+                    "Phone": 8989898989,
+                    "Email": "seller@gmail.com"
+                },
+                "BuyerDetails": {
+                    "CompanyName": "Radixweb",
+                    "Name": "Nitish Patel",
+                    "Address": "B/H Nirma University, Ekyarth, Near Vandemataram Fabula, Malabar County Rd",
+                    "City": "Ahmedabad",
+                    "State": "Gujarat",
+                    "Zip": 382481,
+                    "Phone": 98989898,
+                    "Email": "buyer@gmail.com"
+                },
+                "ItemDetails": [
+                    {
+                        "ItemName": "Item1",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$100",
+                        "Tax": "10%",
+                        "Amount": "$110"
+                    },
+                    {
+                        "ItemName": "Item2",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$200",
+                        "Tax": "20%",
+                        "Amount": "$240"
+                    },
+                    {
+                        "ItemName": "Item3",
+                        "Description": "Description",
+                        "Quantity": 3,
+                        "Price": "$300",
+                        "Tax": "10%",
+                        "Amount": "$990"
+                    },
+                    {
+                        "ItemName": "Item4",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$400",
+                        "Tax": "10%",
+                        "Amount": "$440"
+                    },
+                    {
+                        "ItemName": "Item5",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$500",
+                        "Tax": "10%",
+                        "Amount": "$550"
+                    },
+                    {
+                        "ItemName": "Item6",
+                        "Description": "Description",
+                        "Quantity": 2,
+                        "Price": "$600",
+                        "Tax": "10%",
+                        "Amount": "$1320"
+                    },
+                    {
+                        "ItemName": "Item7",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$700",
+                        "Tax": "10%",
+                        "Amount": "$770"
+                    },
+                    {
+                        "ItemName": "Item8",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$800",
+                        "Tax": "10%",
+                        "Amount": "$880"
+                    },
+                    {
+                        "ItemName": "Item9",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$900",
+                        "Tax": "15%",
+                        "Amount": "$1035"
+                    },
+                    {
+                        "ItemName": "Item10",
+                        "Description": "Description",
+                        "Quantity": 1,
+                        "Price": "$450",
+                        "Tax": "10%",
+                        "Amount": "$495"
+                    }
+                ]
+            }
+        ];
+
+        var invoiceData = sampleJson[0];
+
+        // Populate Seller Details
+        var sellerAddressDiv = document.getElementById("selleraddress");
+        sellerAddressDiv.innerHTML = "<strong>Seller Name:</strong> " + invoiceData.SellerDetails.SellerName + "<br>" +
+                                      "<strong>Seller Address:</strong> " + invoiceData.SellerDetails.SellerAddress + ", " +
+                                      invoiceData.SellerDetails.City + ", " + invoiceData.SellerDetails.State + " - " + invoiceData.SellerDetails.Zip + "<br>" +
+                                      "<strong>Phone:</strong> " + invoiceData.SellerDetails.Phone + "<br>" +
+                                      "<strong>Email:</strong> " + invoiceData.SellerDetails.Email;
+
+        // Populate Buyer Details
+        var billToDiv = document.getElementById("billto");
+        billToDiv.innerHTML = "<strong>Company Name:</strong> " + invoiceData.BuyerDetails.CompanyName + "<br>" +
+                              "<strong>Buyer Name:</strong> " + invoiceData.BuyerDetails.Name + "<br>" +
+                              "<strong>Address:</strong> " + invoiceData.BuyerDetails.Address + ", " +
+                              invoiceData.BuyerDetails.City + ", " + invoiceData.BuyerDetails.State + " - " + invoiceData.BuyerDetails.Zip + "<br>" +
+                              "<strong>Phone:</strong> " + invoiceData.BuyerDetails.Phone + "<br>" +
+                              "<strong>Email:</strong> " + invoiceData.BuyerDetails.Email;
+
+        // Populate Item Details
+        var itemDetailsTable = document.getElementById("itemdetails");
+        invoiceData.ItemDetails.forEach(function(item, index) {
+            var row = itemDetailsTable.insertRow();
+            row.id = item.ItemName + "-" + index;
+            row.insertCell(0).innerHTML = item.ItemName;
+            row.insertCell(1).innerHTML = item.Description;
+            row.insertCell(2).innerHTML = item.Quantity;
+            row.insertCell(3).innerHTML = item.Price;
+            row.insertCell(4).innerHTML = item.Tax;
+            row.insertCell(5).innerHTML = item.Amount;
+        });
+    </script>
+</body>
+</html>
