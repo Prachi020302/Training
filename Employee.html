@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Details Form</title>
+</head>
+<body>
+    <form id="employeeForm">
+        <label for="empid">Employee ID:</label>
+        <input type="text" id="empid" name="empid" required>
+        <span id="spanEmpid"></span><br><br>
+
+        <label for="empname">Employee Name:</label>
+        <input type="text" id="empname" name="empname" required>
+        <span id="spanEmpname"></span><br><br>
+
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" required>
+        <span id="spanAge"></span><br><br>
+
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+        <span id="spanGender"></span><br><br>
+
+        <label for="designation">Designation:</label>
+        <input type="text" id="designation" name="designation" required>
+        <span id="spanDesignation"></span><br><br>
+
+        <label for="salary">Salary:</label>
+        <input type="text" id="salary" name="salary" required>
+        <span id="spanSalary"></span><br><br>
+
+        <label for="location">Location:</label>
+        <select id="location" name="location" required>
+            <option value="">Select Location</option>
+            <option value="Ahmedabad">Ahmedabad</option>
+            <option value="Calcutta">Calcutta</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Mumbai">Mumbai</option>
+        </select>
+        <span id="spanLocation"></span><br><br>
+
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="email" required>
+        <span id="spanEmail"></span><br><br>
+
+        <label for="doj">Date of Joining:</label>
+        <input type="text" id="doj" name="doj" placeholder="dd-mm-yyyy" required>
+        <span id="spanDoj"></span><br><br>
+
+        <label for="contact">Contact Number:</label>
+        <input type="text" id="contact" name="contact" required>
+        <span id="spanContact"></span><br><br>
+
+        <button type="button" id="btnSubmit" onclick="validateForm()">Submit</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            var empid = document.getElementById("empid").value;
+            var empname = document.getElementById("empname").value;
+            var age = document.getElementById("age").value;
+            var gender = document.querySelector('input[name="gender"]:checked');
+            var designation = document.getElementById("designation").value;
+            var salary = document.getElementById("salary").value;
+            var location = document.getElementById("location").value;
+            var email = document.getElementById("email").value;
+            var doj = document.getElementById("doj").value;
+            var contact = document.getElementById("contact").value;
+
+            // EmployeeID validation
+            if (empid.length < 5) {
+                document.getElementById("spanEmpid").innerText = "EmployeeID should be at least 5 characters long.";
+            } else {
+                document.getElementById("spanEmpid").innerText = "";
+            }
+
+            // Age validation
+            if (isNaN(age) || age <= 0) {
+                document.getElementById("spanAge").innerText = "Age should be a number and greater than zero.";
+            } else {
+                document.getElementById("spanAge").innerText = "";
+            }
+
+            // Gender validation
+            if (!gender) {
+                document.getElementById("spanGender").innerText = "Gender is required.";
+            } else {
+                document.getElementById("spanGender").innerText = "";
+            }
+
+            // Location validation
+            if (location === "") {
+                document.getElementById("spanLocation").innerText = "Location is required.";
+            } else {
+                document.getElementById("spanLocation").innerText = "";
+            }
+
+            // Email validation
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById("spanEmail").innerText = "Email ID should be in proper format.";
+            } else {
+                document.getElementById("spanEmail").innerText = "";
+            }
+
+            // Date of joining validation
+            var dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+            if (!dateRegex.test(doj)) {
+                document.getElementById("spanDoj").innerText = "Date of joining should be in date format dd-mm-yyyy.";
+            } else {
+                document.getElementById("spanDoj").innerText = "";
+            }
+        }
+    </script>
+</body>
+</html>
