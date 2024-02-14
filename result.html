@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variable Name Validation</title>
+</head>
+<body>
+    <label for="variableName">Enter a variable name:</label>
+    <input type="text" id="variableName">
+    <button onclick="checkVariable()">Check</button>
+    <div id="result"></div>
+
+    <script>
+        function variableValid(name) {
+            // Regular expression to match valid variable name pattern
+            var regex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+
+            // Test if the name matches the pattern
+            return regex.test(name);
+        }
+
+        function checkVariable() {
+            var name = document.getElementById("variableName").value;
+
+            // Check if the variable name is valid
+            var isValid = variableValid(name);
+
+            // Display the result
+            var resultDiv = document.getElementById("result");
+            if (isValid) {
+                resultDiv.innerText = "The variable name '" + name + "' is valid.";
+            } else {
+                resultDiv.innerText = "The variable name '" + name + "' is not valid.";
+            }
+        }
+    </script>
+</body>
+</html>
