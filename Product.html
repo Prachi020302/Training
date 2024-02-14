@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<style>
+    .product-card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .cart-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+    <div id="productList"></div>
+    <div id="cartList"></div>
+
+    <script>
+        var productList = [
+            // JSON data provided in the question
+        ];
+
+        // Function to render product list
+        function renderProductList() {
+            var productListDiv = document.getElementById('productList');
+            productListDiv.innerHTML = '';
+            productList.forEach(product => {
+                var productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.id = 'item' + product.id;
+                productCard.innerHTML = `
+                    <h3>${product.title}</h3>
+                    <p>Price: $${product.price}</p>
+                    <p>Description: ${product.description}</p>
+                    <img src="${product.image}" alt="${product.title}" width="150">
+                    <p>Rating: ${product.rating.rate} (${product.rating.count} reviews)</p>
+                    <input type="number" id="txtQty${product.id}" value="1" min="1">
+                    <button id="btnIncrement${product.id}" onclick="incrementQuantity(${product.id})">+</button>
+                    <button id="btnDecrement${product.id}" onclick="decrementQuantity(${product.id})">-</button>
+                    <button id="btnCart${product.id}" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productListDiv.appendChild(productCard);
+            });
+        }
+
+        // Function to render cart list
+        function renderCartList() {
+            var cartListDiv = document.getElementById('cartList');
+            cartListDiv.innerHTML = '';
+            cartList.forEach(item => {
+                var cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.id = 'cartItem' + item.id;
+                cartItem.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <p>Price: $${item.price}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                    <button id="cartListIncrement${item.id}" onclick="incrementCartQuantity(${item.id})">+</button>
+                    <button id="cartListDecrement${item.id}" onclick="decrementCartQuantity(${item.id})">-</button>
+                    <button id="btnRemove${item.id}" onclick="removeFromCart(${item.id})">Remove</button>
+                    <p>Total Price: $<span id="TotalPrice${item.id}">${item.price * item.quantity}</span></p>
+                `;
+                cartListDiv.appendChild(cartItem);
+            });
+            var totalPrice = cartList.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            document.getElementById('TotalPrice').innerText = `Total Price: $${totalPrice}`;
+        }
+
+        // Function to add a product to the cart
+        function addToCart(id) {
+            var product = productList.find(item => item.id === id);
+            var quantity = parseInt(document.getElementById('txtQty' + id).value);
+            var existingItemIndex = cartList.findIndex(item => item.id === id);
+            if (existingItemIndex !== -1) {
+                cartList[existingItemIndex].quantity += quantity;
+            } else {
+                cartList.push({ id: id, title: product.title, price: product.price, quantity: quantity });
+            }
+            document.getElementById('btnCart' + id).disabled = true;
+            renderCartList();
+        }
+
+        // Function to remove a product from the cart
+        function removeFromCart(id) {
+            var index = cartList.findIndex(item => item.id === id);
+            cartList.splice(index, 1);
+            document.getElementById('btnCart' + id).disabled = false;
+            renderCartList();
+        }
+
+        // Function to increment quantity of a product in the cart
+        function incrementCartQuantity(id) {
+            var index = cartList.findIndex(item => item.id === id);
+            cartList[index].quantity++;
+            renderCartList();
+        }
+
+        // Function to decrement quantity of a product in the cart
+        function decrementCartQuantity(id) {
+            var index = cartList.findIndex(item => item.id === id);
+            if (cartList[index].quantity > 1) {
+                cartList[index].quantity--;
+                renderCartList();
+            } else {
+                removeFromCart(id);
+            }
+        }
+
+        // Function to increment quantity of a product in the product list
+        function incrementQuantity(id) {
+            var quantityField = document.getElementById('txtQty' + id);
+            quantityField.value = parseInt(quantityField.value) + 1;
+        }
+
+        // Function to decrement quantity of a product in the product list
+        function decrementQuantity(id) {
+            var quantityField = document.getElementById('txtQty' + id);
+            if (quantityField.value > 1) {
+                quantityField.value = parseInt(quantityField.value) - 1;
+            }
+        }
+
+        // Initialize the cart list
+        var cartList = [];
+
+        // Render initial product list
+        renderProductList();
+    </script>
+</body>
+</html>
