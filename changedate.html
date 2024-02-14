@@ -1,0 +1,65 @@
+function daysBetweenDates(date1, date2) {
+    // Convert both dates to milliseconds
+    var date1Millis = date1.getTime();
+    var date2Millis = date2.getTime();
+
+    // Calculate the difference in milliseconds
+    var differenceMillis = Math.abs(date2Millis - date1Millis);
+
+    // Convert milliseconds to days (1 day = 24 hours * 60 minutes * 60 seconds * 1000 milliseconds)
+    var daysDifference = Math.ceil(differenceMillis / (1000 * 60 * 60 * 24));
+
+    return daysDifference;
+}
+
+// Example usage:
+var specifiedDate = new Date('2024-01-01'); // Change this to the specified date
+var inputDate = new Date('2024-02-15'); // Change this to the input date
+var days = daysBetweenDates(inputDate, specifiedDate);
+console.log("Number of days between the specified date and the input date:", days);
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Days Between Dates</title>
+</head>
+<body>
+    <label for="specifiedDate">Enter specified date (YYYY-MM-DD):</label>
+    <input type="text" id="specifiedDate" placeholder="YYYY-MM-DD">
+
+    <label for="inputDate">Enter input date (YYYY-MM-DD):</label>
+    <input type="text" id="inputDate" placeholder="YYYY-MM-DD">
+
+    <button onclick="calculateDays()">Calculate Days</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateDays() {
+            var specifiedDateString = document.getElementById("specifiedDate").value;
+            var inputDateString = document.getElementById("inputDate").value;
+
+            // Parse the input dates
+            var specifiedDate = new Date(specifiedDateString);
+            var inputDate = new Date(inputDateString);
+
+            // Check if the input is valid
+            if (isNaN(specifiedDate.getTime()) || isNaN(inputDate.getTime())) {
+                document.getElementById("result").innerText = "Please enter valid dates in YYYY-MM-DD format.";
+                return;
+            }
+
+            // Calculate the difference in milliseconds
+            var differenceMillis = Math.abs(inputDate.getTime() - specifiedDate.getTime());
+
+            // Convert milliseconds to days
+            var daysDifference = Math.ceil(differenceMillis / (1000 * 60 * 60 * 24));
+
+            // Display the result
+            document.getElementById("result").innerText = "Number of days between the specified date and the input date: " + daysDifference;
+        }
+    </script>
+</body>
+</html>
