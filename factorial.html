@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factorial Check</title>
+</head>
+<body>
+    <label for="numberInput">Enter a number:</label>
+    <input type="number" id="numberInput">
+
+    <button onclick="checkFactorial()">Check Factorial</button>
+
+    <div id="result"></div>
+
+    <script>
+        function isFactorial(num) {
+            let factorial = 1;
+            let i = 1;
+
+            // Calculate the factorial
+            while (factorial < num) {
+                factorial *= ++i;
+            }
+
+            // Check if the calculated factorial is equal to the given number
+            return factorial === num;
+        }
+
+        function checkFactorial() {
+            // Get the input value
+            var number = parseInt(document.getElementById("numberInput").value);
+
+            // Check if the input is a valid number
+            if (isNaN(number)) {
+                document.getElementById("result").innerText = "Please enter a valid number.";
+                return;
+            }
+
+            // Check if the number is a factorial
+            var isFactorialNumber = isFactorial(number);
+
+            // Display the result
+            if (isFactorialNumber) {
+                document.getElementById("result").innerText = number + " is a factorial of an integer.";
+            } else {
+                document.getElementById("result").innerText = number + " is not a factorial of an integer.";
+            }
+        }
+    </script>
+</body>
+</html>
