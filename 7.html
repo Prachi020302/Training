@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabbed Content</title>
+<style>
+    .tab {
+        display: none;
+    }
+    .active {
+        display: block;
+    }
+</style>
+</head>
+<body>
+    <div id="tabs">
+        <button class="tab-btn" data-tab="tab1">Tab 1</button>
+        <button class="tab-btn" data-tab="tab2">Tab 2</button>
+        <button class="tab-btn" data-tab="tab3">Tab 3</button>
+    </div>
+    <div id="tab-content">
+        <div id="tab1" class="tab active">Content for Tab 1</div>
+        <div id="tab2" class="tab">Content for Tab 2</div>
+        <div id="tab3" class="tab">Content for Tab 3</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            
+            function showTab(tabId) {
+                tabs.forEach(tab => {
+                    if (tab.id === tabId) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+            }
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    showTab(tabId);
+                    history.pushState({tab: tabId}, '', `#${tabId}`);
+                });
+            });
+            
+            window.addEventListener('popstate', function(event) {
+                const tabId = event.state ? event.state.tab : 'tab1';
+                showTab(tabId);
+            });
+            
+            // Initialize with the correct tab based on the URL hash
+            const initialTab = window.location.hash ? window.location.hash.substring(1) : 'tab1';
+            showTab(initialTab);
+        });
+    </script>
+</body>
+</html>
