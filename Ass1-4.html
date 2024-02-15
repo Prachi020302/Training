@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Exam Timer</title>
+</head>
+<body>
+    <h1>Online Exam Timer</h1>
+    <div id="timer"></div>
+
+    <script>
+        // Set the duration of the exam in milliseconds (3 hours = 3 * 60 * 60 * 1000 milliseconds)
+        const examDuration = 3 * 60 * 60 * 1000;
+
+        // Get the current time
+        const startTime = new Date().getTime();
+
+        // Function to update the timer display
+        function updateTimer() {
+            // Calculate the remaining time
+            const currentTime = new Date().getTime();
+            const elapsedTime = currentTime - startTime;
+            const remainingTime = examDuration - elapsedTime;
+
+            // Convert remaining time to hours, minutes, and seconds
+            const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            // Display the remaining time
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.textContent = `Time Remaining: ${hours}h ${minutes}m ${seconds}s`;
+
+            // Check if the exam has ended
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Exam Finished!";
+                // Add any additional logic you want to execute when the exam ends
+            }
+        }
+
+        // Update the timer every second
+        const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
+
+
+
+---------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Exam Timer</title>
+</head>
+<body>
+    <h1>Online Exam Timer</h1>
+    <div id="timer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+js:
+document.addEventListener('DOMContentLoaded', function() {
+    const timerDisplay = document.getElementById('timer');
+
+    // Set the timer duration to 3 hours (in milliseconds)
+    const duration = 3 * 60 * 60 * 1000;
+
+    // Get the current time
+    const startTime = Date.now();
+
+    // Update the timer display every second
+    setInterval(updateTimer, 1000);
+
+    function updateTimer() {
+        // Get the current time
+        const currentTime = Date.now();
+
+        // Calculate the time remaining
+        const timeRemaining = duration - (currentTime - startTime);
+
+        if (timeRemaining <= 0) {
+            // If time is up, display "Time's up!" and stop the timer
+            timerDisplay.textContent = "Time's up!";
+            clearInterval(updateTimer);
+        } else {
+            // Convert milliseconds to hours, minutes, and seconds
+            const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((timeRemaining / 1000 / 60) % 60);
+            const seconds = Math.floor((timeRemaining / 1000) % 60);
+
+            // Format the time as HH:MM:SS
+            const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+
+            // Display the formatted time
+            timerDisplay.textContent = formattedTime;
+        }
+    }
+
+    // Helper function to pad single digit numbers with a leading zero
+    function padZero(num) {
+        return (num < 10 ? '0' : '') + num;
+    }
+});
