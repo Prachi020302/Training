@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Booking Platform</title>
+</head>
+<body>
+    <h1>Welcome to the Travel Booking Platform</h1>
+    <nav>
+        <ul>
+            <li><a href="/SearchFlight">Search Flights</a></li>
+            <li><a href="/BookingHistory">Booking History</a></li>
+        </ul>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+js:
+const data = {
+    "destinations": [
+        { "id": 1, "name": "City B" },
+        { "id": 2, "name": "City D" },
+        { "id": 3, "name": "City F" },
+        { "id": 4, "name": "City M" },
+        { "id": 5, "name": "City P" }
+    ],
+    "sources": [
+        { "id": 1, "name": "City A" },
+        { "id": 2, "name": "City C" },
+        { "id": 3, "name": "City E" },
+        { "id": 4, "name": "City T" },
+        { "id": 5, "name": "City U" },
+        { "id": 6, "name": "City K" }
+    ],
+    "flights": [
+        { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
+        { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
+        { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
+        { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
+        { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
+        { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
+        { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
+        { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
+        { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
+        { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
+    ]
+};
+
+// Function to search for flights
+function searchFlights() {
+    // Perform search functionality here
+    console.log("Searching for flights...");
+}
+
+// Function to book a flight
+function bookFlight(flightID) {
+    // Perform booking functionality here
+    console.log("Booking flight with ID:", flightID);
+}
+
+// Function to view booking history
+function viewBookingHistory() {
+    // Perform view booking history functionality here
+    console.log("Viewing booking history...");
+}
+
+// Get the current URL path
+const path = window.location.pathname;
+
+// Route based on the URL path
+switch (path) {
+    case "/SearchFlight":
+        searchFlights();
+        break;
+    case "/BookingHistory":
+        viewBookingHistory();
+        break;
+    default:
+        const bookFlightRegex = /\/BookFlight\/(\d+)/;
+        const match = path.match(bookFlightRegex);
+        if (match) {
+            const flightID = parseInt(match[1]);
+            bookFlight(flightID);
+        }
+}
+-------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Booking Platform</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to the Travel Booking Platform</h1>
+
+    <div id="search-form">
+        <h2>Search for Flights</h2>
+        <label for="source">Source:</label>
+        <select id="source">
+            <option value="">Select Source</option>
+        </select>
+
+        <label for="destination">Destination:</label>
+        <select id="destination">
+            <option value="">Select Destination</option>
+        </select>
+
+        <button onclick="searchFlights()">Search</button>
+    </div>
+
+    <div id="flight-results">
+        <!-- Flight search results will be displayed here -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+js:
+const data = {
+    "destinations": [
+        { "id": 1, "name": "City B" },
+        { "id": 2, "name": "City D" },
+        { "id": 3, "name": "City F" },
+        { "id": 4, "name": "City M" },
+        { "id": 5, "name": "City P" }
+    ],
+    "sources": [
+        { "id": 1, "name": "City A" },
+        { "id": 2, "name": "City C" },
+        { "id": 3, "name": "City E" },
+        { "id": 4, "name": "City T" },
+        { "id": 5, "name": "City U" },
+        { "id": 6, "name": "City K" }
+    ],
+    "flights": [
+        { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
+        { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
+        { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
+        { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
+        { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
+        { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
+        { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
+        { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
+        { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
+        { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
+    ]
+};
+
+// Populate source and destination select options
+const sourceSelect = document.getElementById("source");
+const destinationSelect = document.getElementById("destination");
+
+data.sources.forEach(source => {
+    const option = document.createElement("option");
+    option.value = source.id;
+    option.textContent = source.name;
+    sourceSelect.appendChild(option);
+});
+
+data.destinations.forEach(destination => {
+    const option = document.createElement("option");
+    option.value = destination.id;
+    option.textContent = destination.name;
+    destinationSelect.appendChild(option);
+});
+
+// Function to search for flights
+function searchFlights() {
+    const sourceID = sourceSelect.value;
+    const destinationID = destinationSelect.value;
+
+    // Filter flights based on selected source and destination
+    const filteredFlights = data.flights.filter(flight => flight.sourceID == sourceID && flight.destinationID == destinationID);
+
+    // Display search results
+    displayFlights(filteredFlights);
+}
+
+// Function to display flight search results
+function displayFlights(flights) {
+    const flightResultsDiv = document.getElementById("flight-results");
+    flightResultsDiv.innerHTML = ""; // Clear previous results
+
+    if (flights.length === 0) {
+        flightResultsDiv.textContent = "No flights found.";
+    } else {
+        const ul = document.createElement("ul");
+        flights.forEach(flight => {
+            const li = document.createElement("li");
+            li.textContent = `${flight.name} - Price: $${flight.price} - Departure Date: ${flight.departureDate}`;
+            ul.appendChild(li);
+        });
+        flightResultsDiv.appendChild(ul);
+    }
+}
+
+
+css:
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+#search-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+select, button {
+    margin-right: 10px;
+}
+
+#flight-results {
+    text-align: center;
+}
