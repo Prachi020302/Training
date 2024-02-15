@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Navigation Menu</title>
+</head>
+<body>
+    <nav id="navMenu">
+        <!-- Navigation menu will be generated here -->
+    </nav>
+
+    <section id="section1">
+        <h2>Section 1</h2>
+        <p>This is the content of section 1.</p>
+    </section>
+
+    <section id="section2">
+        <h2>Section 2</h2>
+        <p>This is the content of section 2.</p>
+    </section>
+
+    <section id="section3">
+        <h2>Section 3</h2>
+        <p>This is the content of section 3.</p>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+js:
+document.addEventListener('DOMContentLoaded', function() {
+    // Array of menu items and corresponding section IDs
+    const menuItems = [
+        { text: 'Section 1', sectionId: 'section1' },
+        { text: 'Section 2', sectionId: 'section2' },
+        { text: 'Section 3', sectionId: 'section3' }
+    ];
+
+    // Function to generate the navigation menu
+    function generateMenu() {
+        const navMenu = document.getElementById('navMenu');
+
+        menuItems.forEach(item => {
+            const listItem = document.createElement('li');
+            const anchor = document.createElement('a');
+            anchor.textContent = item.text;
+            anchor.href = `#${item.sectionId}`;
+            listItem.appendChild(anchor);
+            navMenu.appendChild(listItem);
+        });
+    }
+
+    // Function to add smooth scrolling behavior to anchor links
+    function smoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    // Generate the navigation menu and add smooth scrolling behavior
+    generateMenu();
+    smoothScrolling();
+});
