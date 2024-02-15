@@ -169,3 +169,97 @@
     </script>
 </body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Invoice Table</title>
+</head>
+<body>
+    <div id="displaydata">
+        <div id="selleraddress"></div>
+        <div id="billto"></div>
+        <table id="itemdetails">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Tax</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="itemdetailsbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        var sampleJson = [
+            // Your JSON data provided in the question
+        ];
+
+        // Function to parse and display seller details
+        function displaySellerDetails(sellerDetails) {
+            var sellerAddressDiv = document.getElementById('selleraddress');
+            sellerAddressDiv.innerHTML = `
+                <h3>Seller Details:</h3>
+                <p>Name: ${sellerDetails.SellerName}</p>
+                <p>Address: ${sellerDetails.SellerAddress}, ${sellerDetails.City}, ${sellerDetails.State} - ${sellerDetails.Zip}</p>
+                <p>Phone: ${sellerDetails.Phone}</p>
+                <p>Email: ${sellerDetails.Email}</p>
+            `;
+        }
+
+        // Function to parse and display buyer details
+        function displayBuyerDetails(buyerDetails) {
+            var billToDiv = document.getElementById('billto');
+            billToDiv.innerHTML = `
+                <h3>Bill To:</h3>
+                <p>Company Name: ${buyerDetails.CompanyName}</p>
+                <p>Name: ${buyerDetails.Name}</p>
+                <p>Address: ${buyerDetails.Address}, ${buyerDetails.City}, ${buyerDetails.State} - ${buyerDetails.Zip}</p>
+                <p>Phone: ${buyerDetails.Phone}</p>
+                <p>Email: ${buyerDetails.Email}</p>
+            `;
+        }
+
+        // Function to parse and display item details
+        function displayItemDetails(itemDetails) {
+            var itemDetailsBody = document.getElementById('itemdetailsbody');
+            itemDetails.forEach((item, index) => {
+                var row = document.createElement('tr');
+                row.id = `${item.ItemName}-${index}`;
+                row.innerHTML = `
+                    <td>${item.ItemName}</td>
+                    <td>${item.Description}</td>
+                    <td>${item.Quantity}</td>
+                    <td>${item.Price}</td>
+                    <td>${item.Tax}</td>
+                    <td>${item.Amount}</td>
+                `;
+                itemDetailsBody.appendChild(row);
+            });
+        }
+
+        // Function to render invoice table
+        function renderInvoice(sampleJson) {
+            var sellerDetails = sampleJson[0].SellerDetails;
+            var buyerDetails = sampleJson[0].BuyerDetails;
+            var itemDetails = sampleJson[0].ItemDetails;
+
+            displaySellerDetails(sellerDetails);
+            displayBuyerDetails(buyerDetails);
+            displayItemDetails(itemDetails);
+        }
+
+        // Render the invoice table
+        renderInvoice(sampleJson);
+    </script>
+</body>
+</html>
+
