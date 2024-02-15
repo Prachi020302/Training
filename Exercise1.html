@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Grid</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Product Grid</h1>
+    <div class="grid-container" id="product-grid">
+        <!-- Product items will be added dynamically here -->
+    </div>
+
+    <button id="view-cart-btn">View Cart</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+css:
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.product-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.product-item h3 {
+    margin-top: 0;
+}
+
+.add-to-cart-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #0056b3;
+}
+
+js:
+// Sample product data
+const products = [
+    { id: 1, name: 'Product 1', price: 100 },
+    { id: 2, name: 'Product 2', price: 150 },
+    { id: 3, name: 'Product 3', price: 200 },
+    { id: 4, name: 'Product 4', price: 120 },
+    { id: 5, name: 'Product 5', price: 180 }
+];
+
+// Function to display products in the grid
+function displayProducts() {
+    const productGrid = document.getElementById('product-grid');
+
+    products.forEach(product => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product-item');
+        productItem.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>Price: $${product.price}</p>
+            <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
+        `;
+        productGrid.appendChild(productItem);
+    });
+}
+
+// Function to handle adding a product to the cart
+function addToCart(productId) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const product = products.find(p => p.id === productId);
+    if (product) {
+        cart.push(product);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('Product added to cart:', product);
+    }
+}
+
+// Function to display cart summary
+function viewCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log('Cart Summary:');
+    cart.forEach(product => {
+        console.log(`${product.name} - $${product.price}`);
+    });
+}
+
+// Event listener for Add to Cart button clicks
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('add-to-cart-btn')) {
+        const productId = parseInt(event.target.getAttribute('data-id'));
+        addToCart(productId);
+    }
+});
+
+// Event listener for View Cart button click
+document.getElementById('view-cart-btn').addEventListener('click', viewCart);
+
+// Display initial product grid
+displayProducts();
