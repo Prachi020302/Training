@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Details Form</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Investment Details Form</h1>
+    <form id="investment-form">
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+        </div>
+        <div class="form-group">
+            <label for="totalAnnualIncome">Total Annual Income:</label>
+            <input type="number" id="totalAnnualIncome" required>
+        </div>
+        <div class="form-group">
+            <label for="totalAnnualInvestment">Total Annual Investment:</label>
+            <input type="number" id="totalAnnualInvestment" required>
+        </div>
+        <div class="form-group">
+            <label for="contactNo">Contact No:</label>
+            <input type="tel" id="contactNo" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="result-msg" class="hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+css:
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input {
+    padding: 5px;
+}
+
+button {
+    padding: 8px 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+#result-msg {
+    text-align: center;
+}
+
+js:
+document.getElementById('investment-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get form values
+    const fullName = document.getElementById('fullName').value.trim();
+    const age = parseInt(document.getElementById('age').value);
+    const totalAnnualIncome = parseFloat(document.getElementById('totalAnnualIncome').value);
+    const totalAnnualInvestment = parseFloat(document.getElementById('totalAnnualInvestment').value);
+    const contactNo = document.getElementById('contactNo').value.trim();
+
+    // Validate form fields
+    if (!fullName || !age || !totalAnnualIncome || !totalAnnualInvestment || !contactNo) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    // Calculate investment percentage
+    const percentage = (100 * totalAnnualInvestment) / totalAnnualIncome;
+
+    // Display result message
+    const resultMsg = document.getElementById('result-msg');
+    resultMsg.textContent = `Dear ${fullName}, you are investing a total of ${percentage.toFixed(2)}% of your salary. Keep it up!`;
+    resultMsg.classList.remove('hidden');
+});
