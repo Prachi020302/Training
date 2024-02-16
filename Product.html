@@ -26,25 +26,99 @@
             // JSON data provided in the question
         ];
 
+        // Function to create product card element
+        function createProductCard(product) {
+            var productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.id = 'item' + product.id;
+            
+            var title = document.createElement('h3');
+            title.textContent = product.title;
+            productCard.appendChild(title);
+
+            var price = document.createElement('p');
+            price.textContent = 'Price: $' + product.price;
+            productCard.appendChild(price);
+
+            var description = document.createElement('p');
+            description.textContent = 'Description: ' + product.description;
+            productCard.appendChild(description);
+
+            var image = document.createElement('img');
+            image.src = product.image;
+            image.alt = product.title;
+            image.width = '150';
+            productCard.appendChild(image);
+
+            var rating = document.createElement('p');
+            rating.textContent = 'Rating: ' + product.rating.rate + ' (' + product.rating.count + ' reviews)';
+            productCard.appendChild(rating);
+
+            var quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.id = 'txtQty' + product.id;
+            quantityInput.value = '1';
+            quantityInput.min = '1';
+            productCard.appendChild(quantityInput);
+
+            var addToCartButton = document.createElement('button');
+            addToCartButton.textContent = 'Add to Cart';
+            addToCartButton.onclick = function() {
+                addToCart(product.id);
+            };
+            productCard.appendChild(addToCartButton);
+
+            return productCard;
+        }
+
+        // Function to create cart item element
+        function createCartItem(item) {
+            var cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.id = 'cartItem' + item.id;
+
+            var title = document.createElement('h3');
+            title.textContent = item.title;
+            cartItem.appendChild(title);
+
+            var price = document.createElement('p');
+            price.textContent = 'Price: $' + item.price;
+            cartItem.appendChild(price);
+
+            var quantity = document.createElement('p');
+            quantity.textContent = 'Quantity: ' + item.quantity;
+            cartItem.appendChild(quantity);
+
+            var incrementButton = document.createElement('button');
+            incrementButton.textContent = '+';
+            incrementButton.onclick = function() {
+                incrementCartQuantity(item.id);
+            };
+            cartItem.appendChild(incrementButton);
+
+            var decrementButton = document.createElement('button');
+            decrementButton.textContent = '-';
+            decrementButton.onclick = function() {
+                decrementCartQuantity(item.id);
+            };
+            cartItem.appendChild(decrementButton);
+
+            var removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+                removeFromCart(item.id);
+            };
+            cartItem.appendChild(removeButton);
+
+            return cartItem;
+        }
+
         // Function to render product list
         function renderProductList() {
             var productListDiv = document.getElementById('productList');
             productListDiv.innerHTML = '';
             productList.forEach(product => {
-                var productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.id = 'item' + product.id;
-                productCard.innerHTML = `
-                    <h3>${product.title}</h3>
-                    <p>Price: $${product.price}</p>
-                    <p>Description: ${product.description}</p>
-                    <img src="${product.image}" alt="${product.title}" width="150">
-                    <p>Rating: ${product.rating.rate} (${product.rating.count} reviews)</p>
-                    <input type="number" id="txtQty${product.id}" value="1" min="1">
-                    <button id="btnIncrement${product.id}" onclick="incrementQuantity(${product.id})">+</button>
-                    <button id="btnDecrement${product.id}" onclick="decrementQuantity(${product.id})">-</button>
-                    <button id="btnCart${product.id}" onclick="addToCart(${product.id})">Add to Cart</button>
-                `;
+                var productCard = createProductCard(product);
                 productListDiv.appendChild(productCard);
             });
         }
@@ -54,22 +128,9 @@
             var cartListDiv = document.getElementById('cartList');
             cartListDiv.innerHTML = '';
             cartList.forEach(item => {
-                var cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.id = 'cartItem' + item.id;
-                cartItem.innerHTML = `
-                    <h3>${item.title}</h3>
-                    <p>Price: $${item.price}</p>
-                    <p>Quantity: ${item.quantity}</p>
-                    <button id="cartListIncrement${item.id}" onclick="incrementCartQuantity(${item.id})">+</button>
-                    <button id="cartListDecrement${item.id}" onclick="decrementCartQuantity(${item.id})">-</button>
-                    <button id="btnRemove${item.id}" onclick="removeFromCart(${item.id})">Remove</button>
-                    <p>Total Price: $<span id="TotalPrice${item.id}">${item.price * item.quantity}</span></p>
-                `;
+                var cartItem = createCartItem(item);
                 cartListDiv.appendChild(cartItem);
             });
-            var totalPrice = cartList.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            document.getElementById('TotalPrice').innerText = `Total Price: $${totalPrice}`;
         }
 
         // Function to add a product to the cart
@@ -82,7 +143,6 @@
             } else {
                 cartList.push({ id: id, title: product.title, price: product.price, quantity: quantity });
             }
-            document.getElementById('btnCart' + id).disabled = true;
             renderCartList();
         }
 
@@ -90,7 +150,6 @@
         function removeFromCart(id) {
             var index = cartList.findIndex(item => item.id === id);
             cartList.splice(index, 1);
-            document.getElementById('btnCart' + id).disabled = false;
             renderCartList();
         }
 
@@ -109,20 +168,6 @@
                 renderCartList();
             } else {
                 removeFromCart(id);
-            }
-        }
-
-        // Function to increment quantity of a product in the product list
-        function incrementQuantity(id) {
-            var quantityField = document.getElementById('txtQty' + id);
-            quantityField.value = parseInt(quantityField.value) + 1;
-        }
-
-        // Function to decrement quantity of a product in the product list
-        function decrementQuantity(id) {
-            var quantityField = document.getElementById('txtQty' + id);
-            if (quantityField.value > 1) {
-                quantityField.value = parseInt(quantityField.value) - 1;
             }
         }
 
