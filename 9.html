@@ -4,117 +4,104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multi-Step Form</title>
-<link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .step {
+        display: none;
+    }
+    .step.active {
+        display: block;
+    }
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
-    <div id="form-container">
-        <form id="multi-step-form">
-            <fieldset id="step-1" class="step">
-                <legend>Step 1</legend>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <button class="next-step">Next</button>
-            </fieldset>
-            <fieldset id="step-2" class="step">
-                <legend>Step 2</legend>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <button class="prev-step">Previous</button>
-                <button class="next-step">Next</button>
-            </fieldset>
-            <fieldset id="step-3" class="step">
-                <legend>Step 3</legend>
-                <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" required>
-                <button class="prev-step">Previous</button>
-                <button type="submit">Submit</button>
-            </fieldset>
-        </form>
-    </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+<div class="step" id="step1">
+    <h2>Step 1: Personal Information</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    <button class="btn" onclick="nextStep()">Next</button>
+</div>
 
-css:
-#form-container {
-    width: 80%;
-    margin: 0 auto;
-}
+<div class="step" id="step2">
+    <h2>Step 2: Address Information</h2>
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address"><br><br>
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city"><br><br>
+    <button class="btn" onclick="prevStep()">Previous</button>
+    <button class="btn" onclick="nextStep()">Next</button>
+</div>
 
-.step {
-    display: none;
-}
+<div class="step" id="step3">
+    <h2>Step 3: Additional Information</h2>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone"><br><br>
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob"><br><br>
+    <button class="btn" onclick="prevStep()">Previous</button>
+    <button class="btn" onclick="submitForm()">Submit</button>
+</div>
 
-.step.active {
-    display: block;
-}
+<script>
+    var currentStep = 1;
+    var steps = document.querySelectorAll('.step');
 
-button {
-    margin-top: 10px;
-}
-
-js:
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('multi-step-form');
-    const formSteps = form.querySelectorAll('.step');
-    let currentStep = 0;
-
-    // Show the current step and update history
-    function showStep(stepIndex) {
-        formSteps.forEach((step, index) => {
-            if (index === stepIndex) {
-                step.classList.add('active');
-            } else {
-                step.classList.remove('active');
-            }
-        });
-
-        // Update history state
-        history.pushState({ step: stepIndex }, `Step ${stepIndex + 1}`, `?step=${stepIndex + 1}`);
-    }
-
-    // Initialize form with the correct step based on URL query parameter
-    function initForm() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const stepParam = urlParams.get('step');
-        if (stepParam) {
-            const stepIndex = parseInt(stepParam) - 1;
-            if (!isNaN(stepIndex) && stepIndex >= 0 && stepIndex < formSteps.length) {
-                currentStep = stepIndex;
-                showStep(currentStep);
-            }
+    function nextStep() {
+        if (currentStep < steps.length) {
+            steps[currentStep - 1].classList.remove('active');
+            steps[currentStep].classList.add('active');
+            currentStep++;
+            history.pushState({ step: currentStep }, '', `?step=${currentStep}`);
         }
     }
 
-    // Event listeners for next and previous buttons
-    form.querySelectorAll('.next-step').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (currentStep < formSteps.length - 1) {
-                currentStep++;
-                showStep(currentStep);
-            }
-        });
-    });
+    function prevStep() {
+        if (currentStep > 1) {
+            steps[currentStep - 1].classList.remove('active');
+            currentStep--;
+            steps[currentStep - 1].classList.add('active');
+            history.pushState({ step: currentStep }, '', `?step=${currentStep}`);
+        }
+    }
 
-    form.querySelectorAll('.prev-step').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (currentStep > 0) {
-                currentStep--;
-                showStep(currentStep);
-            }
-        });
-    });
-
-    // Handle form submission (prevent default)
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    function submitForm() {
         // Perform form submission logic here
         alert('Form submitted successfully!');
-    });
+    }
 
-    // Initialize the form
-    initForm();
-});
+    window.onpopstate = function(event) {
+        var step = event.state ? event.state.step : 1;
+        for (var i = 0; i < steps.length; i++) {
+            if (i + 1 == step) {
+                steps[i].classList.add('active');
+            } else {
+                steps[i].classList.remove('active');
+            }
+        }
+        currentStep = step;
+    };
+
+    // Initialize the form based on URL query parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var initialStep = parseInt(urlParams.get('step')) || 1;
+    currentStep = initialStep;
+    steps[initialStep - 1].classList.add('active');
+    history.replaceState({ step: currentStep }, '', `?step=${currentStep}`);
+</script>
+
+</body>
+</html>
