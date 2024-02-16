@@ -4,73 +4,103 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dynamic Navigation Menu</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    nav {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    nav ul li {
+        margin-right: 20px;
+    }
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    nav ul li a:hover {
+        color: #ccc;
+    }
+    section {
+        padding: 20px;
+        margin-top: 50px;
+    }
+</style>
 </head>
 <body>
-    <nav id="navMenu">
-        <!-- Navigation menu will be generated here -->
-    </nav>
 
-    <section id="section1">
-        <h2>Section 1</h2>
-        <p>This is the content of section 1.</p>
-    </section>
+<nav id="mainNav"></nav>
 
-    <section id="section2">
-        <h2>Section 2</h2>
-        <p>This is the content of section 2.</p>
-    </section>
+<section id="section1">
+    <h2>Section 1</h2>
+    <p>This is the first section.</p>
+</section>
 
-    <section id="section3">
-        <h2>Section 3</h2>
-        <p>This is the content of section 3.</p>
-    </section>
+<section id="section2">
+    <h2>Section 2</h2>
+    <p>This is the second section.</p>
+</section>
 
-    <script src="script.js"></script>
-</body>
-</html>
+<section id="section3">
+    <h2>Section 3</h2>
+    <p>This is the third section.</p>
+</section>
 
-js:
-document.addEventListener('DOMContentLoaded', function() {
-    // Array of menu items and corresponding section IDs
-    const menuItems = [
-        { text: 'Section 1', sectionId: 'section1' },
-        { text: 'Section 2', sectionId: 'section2' },
-        { text: 'Section 3', sectionId: 'section3' }
+<script>
+    // Array of menu items
+    var menuItems = [
+        { text: 'Section 1', target: 'section1' },
+        { text: 'Section 2', target: 'section2' },
+        { text: 'Section 3', target: 'section3' }
     ];
 
-    // Function to generate the navigation menu
-    function generateMenu() {
-        const navMenu = document.getElementById('navMenu');
+    // Function to create navigation menu
+    function createMenu() {
+        var nav = document.getElementById('mainNav');
+        var ul = document.createElement('ul');
 
         menuItems.forEach(item => {
-            const listItem = document.createElement('li');
-            const anchor = document.createElement('a');
-            anchor.textContent = item.text;
-            anchor.href = `#${item.sectionId}`;
-            listItem.appendChild(anchor);
-            navMenu.appendChild(listItem);
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            a.href = '#' + item.target;
+            a.textContent = item.text;
+            a.addEventListener('click', smoothScroll);
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+
+        nav.appendChild(ul);
+    }
+
+    // Function to scroll smoothly to target section
+    function smoothScroll(event) {
+        event.preventDefault();
+        var targetId = event.target.getAttribute('href').substring(1);
+        var targetSection = document.getElementById(targetId);
+        window.scrollTo({
+            top: targetSection.offsetTop,
+            behavior: 'smooth'
         });
     }
 
-    // Function to add smooth scrolling behavior to anchor links
-    function smoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
+    // Call the function to create the menu
+    createMenu();
+</script>
 
-                const targetId = this.getAttribute('href').substring(1);
-                const targetSection = document.getElementById(targetId);
-
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-
-    // Generate the navigation menu and add smooth scrolling behavior
-    generateMenu();
-    smoothScrolling();
-});
+</body>
+</html>
