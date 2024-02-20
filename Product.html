@@ -570,3 +570,17 @@
 </body>
 </html>
 
+------------------------------------
+
+// Function to render cart list
+        function renderCartList() {
+            var cartListDiv = document.getElementById('cartList');
+            cartListDiv.innerHTML = '';
+            var totalProducts = 0; // Initialize totalProducts counter
+            cartList.forEach(item => {
+                var cartItem = createCartItem(item);
+                cartListDiv.appendChild(cartItem);
+                totalProducts += item.quantity; // Increment totalProducts by item.quantity
+            });
+            document.getElementById('totalProducts').textContent = totalProducts; // Update totalProducts in HTML
+        }
