@@ -4,626 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Travel Booking Platform</title>
-</head>
-<body>
-    <h1>Welcome to the Travel Booking Platform</h1>
-    <nav>
-        <ul>
-            <li><a href="/SearchFlight">Search Flights</a></li>
-            <li><a href="/BookingHistory">Booking History</a></li>
-        </ul>
-    </nav>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-js:
-const data = {
-    "destinations": [
-        { "id": 1, "name": "City B" },
-        { "id": 2, "name": "City D" },
-        { "id": 3, "name": "City F" },
-        { "id": 4, "name": "City M" },
-        { "id": 5, "name": "City P" }
-    ],
-    "sources": [
-        { "id": 1, "name": "City A" },
-        { "id": 2, "name": "City C" },
-        { "id": 3, "name": "City E" },
-        { "id": 4, "name": "City T" },
-        { "id": 5, "name": "City U" },
-        { "id": 6, "name": "City K" }
-    ],
-    "flights": [
-        { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
-        { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
-        { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
-        { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
-        { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
-        { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
-        { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
-        { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
-        { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
-        { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
-    ]
-};
-
-// Function to search for flights
-function searchFlights() {
-    // Perform search functionality here
-    console.log("Searching for flights...");
-}
-
-// Function to book a flight
-function bookFlight(flightID) {
-    // Perform booking functionality here
-    console.log("Booking flight with ID:", flightID);
-}
-
-// Function to view booking history
-function viewBookingHistory() {
-    // Perform view booking history functionality here
-    console.log("Viewing booking history...");
-}
-
-// Get the current URL path
-const path = window.location.pathname;
-
-// Route based on the URL path
-switch (path) {
-    case "/SearchFlight":
-        searchFlights();
-        break;
-    case "/BookingHistory":
-        viewBookingHistory();
-        break;
-    default:
-        const bookFlightRegex = /\/BookFlight\/(\d+)/;
-        const match = path.match(bookFlightRegex);
-        if (match) {
-            const flightID = parseInt(match[1]);
-            bookFlight(flightID);
-        }
-}
--------------------------
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travel Booking Platform</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Welcome to the Travel Booking Platform</h1>
-
-    <div id="search-form">
-        <h2>Search for Flights</h2>
-        <label for="source">Source:</label>
-        <select id="source">
-            <option value="">Select Source</option>
-        </select>
-
-        <label for="destination">Destination:</label>
-        <select id="destination">
-            <option value="">Select Destination</option>
-        </select>
-
-        <button onclick="searchFlights()">Search</button>
-    </div>
-
-    <div id="flight-results">
-        <!-- Flight search results will be displayed here -->
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-js:
-const data = {
-    "destinations": [
-        { "id": 1, "name": "City B" },
-        { "id": 2, "name": "City D" },
-        { "id": 3, "name": "City F" },
-        { "id": 4, "name": "City M" },
-        { "id": 5, "name": "City P" }
-    ],
-    "sources": [
-        { "id": 1, "name": "City A" },
-        { "id": 2, "name": "City C" },
-        { "id": 3, "name": "City E" },
-        { "id": 4, "name": "City T" },
-        { "id": 5, "name": "City U" },
-        { "id": 6, "name": "City K" }
-    ],
-    "flights": [
-        { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
-        { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
-        { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
-        { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
-        { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
-        { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
-        { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
-        { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
-        { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
-        { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
-    ]
-};
-
-// Populate source and destination select options
-const sourceSelect = document.getElementById("source");
-const destinationSelect = document.getElementById("destination");
-
-data.sources.forEach(source => {
-    const option = document.createElement("option");
-    option.value = source.id;
-    option.textContent = source.name;
-    sourceSelect.appendChild(option);
-});
-
-data.destinations.forEach(destination => {
-    const option = document.createElement("option");
-    option.value = destination.id;
-    option.textContent = destination.name;
-    destinationSelect.appendChild(option);
-});
-
-// Function to search for flights
-function searchFlights() {
-    const sourceID = sourceSelect.value;
-    const destinationID = destinationSelect.value;
-
-    // Filter flights based on selected source and destination
-    const filteredFlights = data.flights.filter(flight => flight.sourceID == sourceID && flight.destinationID == destinationID);
-
-    // Display search results
-    displayFlights(filteredFlights);
-}
-
-// Function to display flight search results
-function displayFlights(flights) {
-    const flightResultsDiv = document.getElementById("flight-results");
-    flightResultsDiv.innerHTML = ""; // Clear previous results
-
-    if (flights.length === 0) {
-        flightResultsDiv.textContent = "No flights found.";
-    } else {
-        const ul = document.createElement("ul");
-        flights.forEach(flight => {
-            const li = document.createElement("li");
-            li.textContent = `${flight.name} - Price: $${flight.price} - Departure Date: ${flight.departureDate}`;
-            ul.appendChild(li);
-        });
-        flightResultsDiv.appendChild(ul);
-    }
-}
-
-
-css:
-body {
-    font-family: Arial, sans-serif;
-}
-
-h1 {
-    text-align: center;
-}
-
-#search-form {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-label {
-    margin-right: 10px;
-}
-
-select, button {
-    margin-right: 10px;
-}
-
-#flight-results {
-    text-align: center;
-}
-
---------------------------
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travel Planner</title>
-<style>
-    /* CSS styles */
-    /* Add your CSS styles here */
-</style>
-</head>
-<body>
-    <!-- Screen 1: SearchFlight -->
-    <div id="searchFlight" style="display: block;">
-        <h2>Search for Flights</h2>
-        <!-- Form to search for flights -->
-        <form id="searchForm" onsubmit="searchFlights(); return false;">
-            <label for="source">Source:</label>
-            <select id="source">
-                <!-- Options will be populated dynamically using JavaScript -->
-            </select>
-            <label for="destination">Destination:</label>
-            <select id="destination">
-                <!-- Options will be populated dynamically using JavaScript -->
-            </select>
-            <button type="submit">Search</button>
-        </form>
-        <!-- Div to display search results -->
-        <div id="searchResults"></div>
-    </div>
-
-    <!-- Screen 2: BookFlight -->
-    <div id="bookFlight" style="display: none;">
-        <h2>Book Flight</h2>
-        <div id="flightDetails"></div>
-        <form id="bookingForm" onsubmit="bookFlight(); return false;">
-            <label for="passengerName">Passenger Name:</label>
-            <input type="text" id="passengerName" required>
-            <label for="passengerAge">Passenger Age:</label>
-            <input type="number" id="passengerAge" required>
-            <button type="submit">Book</button>
-        </form>
-    </div>
-
-    <!-- Screen 3: BookingHistory -->
-    <div id="bookingHistory" style="display: none;">
-        <h2>Booking History</h2>
-        <ul id="historyList"></ul>
-    </div>
-
-    <script>
-        // JavaScript code
-        // JSON data provided in the question
-        var data = {
-            "destinations": [
-                { "id": 1, "name": "City B" },
-                { "id": 2, "name": "City D" },
-                { "id": 3, "name": "City F" },
-                { "id": 4, "name": "City M" },
-                { "id": 5, "name": "City P" }
-            ],
-            "sources": [
-                { "id": 1, "name": "City A" },
-                { "id": 2, "name": "City C" },
-                { "id": 3, "name": "City E" },
-                { "id": 4, "name": "City T" },
-                { "id": 5, "name": "City U" },
-                { "id": 6, "name": "City K" }
-            ],
-            "flights": [
-                { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
-                { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
-                { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
-                { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
-                { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
-                { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
-                { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
-                { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
-                { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
-                { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
-            ]
-        };
-
-        // Function to populate select options for source and destination
-        function populateOptions() {
-            var sourceSelect = document.getElementById('source');
-            var destinationSelect = document.getElementById('destination');
-
-            data.sources.forEach(source => {
-                var option = new Option(source.name, source.id);
-                sourceSelect.add(option);
-            });
-
-            data.destinations.forEach(destination => {
-                var option = new Option(destination.name, destination.id);
-                destinationSelect.add(option);
-            });
-        }
-
-       
-css:
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-h2 {
-    margin-top: 0;
-}
-
-button {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-input[type="text"],
-input[type="number"],
-select {
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-/* Screen 1: SearchFlight */
-#searchFlight {
-    padding: 20px;
-}
-
-/* Screen 2: BookFlight */
-#bookFlight {
-    display: none;
-    padding: 20px;
-}
-
-/* Screen 3: BookingHistory */
-#bookingHistory {
-    display: none;
-    padding: 20px;
-}
-
-/* Search results */
-#searchResults {
-    margin-top: 20px;
-}
-
-/* Flight details */
-#flightDetails {
-    margin-bottom: 20px;
-}
-
-/* Booking history list */
-#historyList {
-    list-style-type: none;
-    padding: 0;
-}
-
-#historyList li {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
--------------------------------------
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travel Booking Platform</title>
-<style>
-    /* CSS styles go here */
-    .error {
-        color: red;
-    }
-</style>
-</head>
-<body>
-    <!-- Screen1: SearchFlight -->
-    <div id="searchFlightScreen" style="display: block;">
-        <h2>Search for Flights</h2>
-        <div id="searchForm">
-            <label for="source">Source:</label>
-            <select id="source">
-                <!-- Options will be dynamically generated using JavaScript -->
-            </select>
-            <label for="destination">Destination:</label>
-            <select id="destination">
-                <!-- Options will be dynamically generated using JavaScript -->
-            </select>
-            <label for="departureDate">Departure Date:</label>
-            <input type="date" id="departureDate" value="2024-01-02">
-            <label for="flightName">Flight Name:</label>
-            <input type="text" id="flightName">
-            <button onclick="searchFlights()">Search</button>
-        </div>
-        <div id="searchResults" style="display: none;">
-            <h3>Search Results</h3>
-            <table id="flightResults">
-                <!-- Flight search results will be dynamically generated using JavaScript -->
-            </table>
-        </div>
-    </div>
-
-    <!-- Screen2: BookFlight -->
-    <div id="bookFlightScreen" style="display: none;">
-        <h2>Book Flight</h2>
-        <div id="bookingDetails">
-            <p id="selectedFlight"></p>
-            <form id="bookFlightForm" onsubmit="return validateBooking()">
-                <label for="name">Name:</label>
-                <input type="text" id="name" required>
-                <label for="numPersons">Number of Persons:</label>
-                <input type="number" id="numPersons" min="1" required>
-                <label for="totalPrice">Total Price:</label>
-                <input type="text" id="totalPrice" readonly>
-                <button type="submit">Book Flight</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Screen3: BookingHistory -->
-    <div id="bookingHistoryScreen" style="display: none;">
-        <h2>Booking History</h2>
-        <table id="bookingHistoryTable">
-            <!-- Booking history data will be dynamically generated using JavaScript -->
-        </table>
-    </div>
-
-    <script>
-        // JSON data
-        var data = {
-            "destinations": [
-                { "id": 1, "name": "City B" },
-                { "id": 2, "name": "City D" },
-                { "id": 3, "name": "City F" },
-                { "id": 4, "name": "City M" },
-                { "id": 5, "name": "City P" }
-            ],
-            "sources": [
-                { "id": 1, "name": "City A" },
-                { "id": 2, "name": "City C" },
-                { "id": 3, "name": "City E" },
-                { "id": 4, "name": "City T" },
-                { "id": 5, "name": "City U" },
-                { "id": 6, "name": "City K" }
-            ],
-            "flights": [
-                { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
-                { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
-                { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
-                { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
-                { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
-                { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
-                { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
-                { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
-                { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
-                { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
-            ]
-        };
-
-        // Function to navigate between screens
-        function navigateTo(screenId) {
-            var screens = document.querySelectorAll('[id$="Screen"]');
-            screens.forEach(screen => {
-                screen.style.display = 'none';
-            });
-            document.getElementById(screenId).style.display = 'block';
-        }
-
-        // Function to load sources and destinations dropdown
-        function loadSourcesAndDestinations() {
-            var sources = data.sources;
-            var destinations = data.destinations;
-
-            var sourceDropdown = document.getElementById('source');
-            var destinationDropdown = document.getElementById('destination');
-
-            sources.forEach(source => {
-                var option = document.createElement('option');
-                option.text = source.name;
-                option.value = source.id;
-                sourceDropdown.add(option);
-            });
-
-            destinations.forEach(destination => {
-                var option = document.createElement('option');
-                option.text = destination.name;
-                option.value = destination.id;
-                destinationDropdown.add(option);
-            });
-        }
-
-        // Function to search for flights
-        function searchFlights() {
-            var sourceId = document.getElementById('source').value;
-            var destinationId = document.getElementById('destination').value;
-            var departureDate = document.getElementById('departureDate').value;
-            var flightName = document.getElementById('flightName').value.toLowerCase();
-
-            var flights = data.flights.filter(flight => {
-                return flight.sourceID == sourceId &&
-                    flight.destinationID == destinationId &&
-                    flight.departureDate == departureDate &&
-                    flight.name.toLowerCase().includes(flightName);
-            });
-
-            if (flights.length > 0) {
-                var flightResults = document.getElementById('flightResults');
-                flightResults.innerHTML = '<tr><th>Flight Name</th><th>Price</th><th>Action</th></tr>';
-
-                flights.forEach(flight => {
-                    var row = flightResults.insertRow();
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-                    cell1.innerHTML = flight.name;
-                    cell2.innerHTML = '$' + flight.price;
-                    cell3.innerHTML = '<button onclick="showBookingDetails(' + flight.flightID + ')">Book</button>';
-                });
-
-                document.getElementById('searchResults').style.display = 'block';
-            } else {
-                alert('No flights found.');
-            }
-        }
-
-        // Function to show booking details
-        function showBookingDetails(flightID) {
-            var flight = data.flights.find(f => f.flightID == flightID);
-            document.getElementById('selectedFlight').innerText = 'Selected Flight: ' + flight.name + ' - $' + flight.price;
-            document.getElementById('flightName').value = flight.name;
-            document.getElementById('price').value = '$' + flight.price;
-            calculateTotalPrice();
-            navigateTo('bookFlightScreen');
-        }
-
-        // Function to calculate total price
-        function calculateTotalPrice() {
-            var price = parseInt(document.getElementById('price').value.replace('$', ''));
-            var numPersons = parseInt(document.getElementById('numPersons').value);
-            var tax = 0.1 * price;
-            var totalPrice = price * numPersons + tax;
-            document.getElementById('totalPrice').value = '$' + totalPrice.toFixed(2);
-        }
-
-        // Function to validate booking form
-        function validateBooking() {
-            var name = document.getElementById('name').value;
-            var numPersons = parseInt(document.getElementById('numPersons').value);
-
-            var isValid = true;
-            var errorMessage = '';
-
-            if (!name.trim()) {
-                isValid = false;
-                errorMessage += 'Name is required.\n';
-            }
-
-            if (isNaN(numPersons) || numPersons < 1) {
-                isValid = false;
-                errorMessage += 'Number of persons must be a positive integer.\n';
-            }
-
-            if (!isValid) {
-                alert(errorMessage);
-            }
-
-            return isValid;
-        }
-
-        // Initial setup
-        loadSourcesAndDestinations();
-        navigateTo('searchFlightScreen');
-    </script>
-</body>
-</html>
-
----------------------------
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travel Booking Platform</title>
 <style>
     /* CSS styles go here */
     .error {
@@ -1032,6 +412,252 @@ select {
             }
 
             return isValid;
+        }
+
+        // Initial setup
+        loadSourcesAndDestinations();
+        navigateTo('searchFlightScreen');
+    </script>
+</body>
+</html>
+
+----------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Booking Platform</title>
+<style>
+    /* CSS styles go here */
+    .error {
+        color: red;
+    }
+</style>
+</head>
+<body>
+    <!-- Screen1: SearchFlight -->
+    <div id="searchFlightScreen" style="display: block;">
+        <h2>Search for Flights</h2>
+        <div id="searchForm">
+            <label for="source">Source:</label>
+            <select id="source">
+                <!-- Options will be dynamically generated using JavaScript -->
+            </select>
+            <label for="destination">Destination:</label>
+            <select id="destination">
+                <!-- Options will be dynamically generated using JavaScript -->
+            </select>
+            <button onclick="searchFlights()">Search</button>
+        </div>
+        <div id="searchResults" style="display: none;">
+            <h3>Search Results</h3>
+            <table id="flightResults">
+                <!-- Flight search results will be dynamically generated using JavaScript -->
+            </table>
+        </div>
+    </div>
+
+    <!-- Screen2: BookFlight -->
+    <div id="bookFlightScreen" style="display: none;">
+        <h2 id="selectedFlight"></h2>
+        <div id="bookingDetails">
+            <form id="bookFlightForm" onsubmit="return validateBooking()">
+                <label for="flightName">Flight Name:</label>
+                <input type="text" id="flightName" readonly><br>
+                <label for="price">Price:</label>
+                <input type="text" id="price" readonly><br>
+                <label for="name">Name:</label>
+                <input type="text" id="name" required><br>
+                <label for="numPersons">Number of Persons:</label>
+                <input type="number" id="numPersons" min="1" required><br>
+                <label for="totalPrice">Total Price:</label>
+                <input type="text" id="totalPrice" readonly><br>
+                <button type="submit">Book Flight</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Screen3: BookingHistory -->
+    <div id="bookingHistoryScreen" style="display: none;">
+        <h2>Booking History</h2>
+        <table id="bookingHistoryTable">
+            <!-- Booking history data will be dynamically generated using JavaScript -->
+        </table>
+    </div>
+
+    <script>
+        // JSON data
+        var data = {
+            "destinations": [
+                { "id": 1, "name": "City B" },
+                { "id": 2, "name": "City D" },
+                { "id": 3, "name": "City F" },
+                { "id": 4, "name": "City M" },
+                { "id": 5, "name": "City P" }
+            ],
+            "sources": [
+                { "id": 1, "name": "City A" },
+                { "id": 2, "name": "City C" },
+                { "id": 3, "name": "City E" },
+                { "id": 4, "name": "City T" },
+                { "id": 5, "name": "City U" },
+                { "id": 6, "name": "City K" }
+            ],
+            "flights": [
+                { "flightID": 1, "name": "Flight 1", "price": 300, "sourceID": 1, "destinationID": 2, "departureDate": "2023-12-15" },
+                { "flightID": 2, "name": "Flight 2", "price": 250, "sourceID": 3, "destinationID": 4, "departureDate": "2023-12-18" },
+                { "flightID": 3, "name": "Flight 3", "price": 400, "sourceID": 5, "destinationID": 6, "departureDate": "2023-12-20" },
+                { "flightID": 4, "name": "Flight 4", "price": 350, "sourceID": 2, "destinationID": 1, "departureDate": "2023-12-22" },
+                { "flightID": 5, "name": "Flight 5", "price": 280, "sourceID": 4, "destinationID": 3, "departureDate": "2023-12-25" },
+                { "flightID": 6, "name": "Flight 6", "price": 420, "sourceID": 6, "destinationID": 5, "departureDate": "2023-12-28" },
+                { "flightID": 7, "name": "Flight 7", "price": 320, "sourceID": 1, "destinationID": 3, "departureDate": "2023-12-30" },
+                { "flightID": 8, "name": "Flight 8", "price": 260, "sourceID": 3, "destinationID": 5, "departureDate": "2024-01-02" },
+                { "flightID": 9, "name": "Flight 9", "price": 380, "sourceID": 5, "destinationID": 1, "departureDate": "2024-01-05" },
+                { "flightID": 10, "name": "Flight 10", "price": 310, "sourceID": 2, "destinationID": 4, "departureDate": "2024-01-08" }
+            ]
+        };
+
+        // Variable to store previous search results
+        var previousSearchResults = [];
+
+        // Function to navigate between screens
+        function navigateTo(screenId) {
+            var screens = document.querySelectorAll('[id$="Screen"]');
+            screens.forEach(screen => {
+                screen.style.display = 'none';
+            });
+            document.getElementById(screenId).style.display = 'block';
+        }
+
+        // Function to load sources and destinations dropdown
+        function loadSourcesAndDestinations() {
+            var sources = data.sources;
+            var destinations = data.destinations;
+
+            var sourceDropdown = document.getElementById('source');
+            var destinationDropdown = document.getElementById('destination');
+
+            sources.forEach(source => {
+                var option = document.createElement('option');
+                option.text = source.name;
+                option.value = source.id;
+                sourceDropdown.add(option);
+            });
+
+            destinations.forEach(destination => {
+                var option = document.createElement('option');
+                option.text = destination.name;
+                option.value = destination.id;
+                destinationDropdown.add(option);
+            });
+        }
+
+        // Function to search for flights
+        function searchFlights() {
+            var sourceId = document.getElementById('source').value;
+            var destinationId = document.getElementById('destination').value;
+
+            var flights = data.flights.filter(flight => {
+                return flight.sourceID == sourceId &&
+                    flight.destinationID == destinationId &&
+                    flight.departureDate == "2024-01-02";
+            });
+
+            previousSearchResults.push({ sourceId: sourceId, destinationId: destinationId, flights: flights });
+
+            displaySearchResults(flights);
+        }
+
+        // Function to display search results
+        function displaySearchResults(flights) {
+            var flightResults = document.getElementById('flightResults');
+            flightResults.innerHTML = '<tr><th>Flight Name</th><th>Price</th><th>Action</th></tr>';
+
+            flights.forEach(flight => {
+                var row = flightResults.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                cell1.innerHTML = flight.name;
+                cell2.innerHTML = '$' + flight.price;
+                cell3.innerHTML = '<button onclick="showBookingDetails(' + flight.flightID + ')">Book</button>';
+            });
+
+            document.getElementById('searchResults').style.display = 'block';
+        }
+
+        // Function to show booking details
+        function showBookingDetails(flightID) {
+            var flight = data.flights.find(f => f.flightID == flightID);
+            document.getElementById('selectedFlight').innerText = 'Selected Flight: ' + flight.name + ' - $' + flight.price;
+            document.getElementById('flightName').value = flight.name;
+            document.getElementById('price').value = '$' + flight.price;
+            calculateTotalPrice();
+            navigateTo('bookFlightScreen');
+        }
+
+        // Function to calculate total price
+        function calculateTotalPrice() {
+            var price = parseInt(document.getElementById('price').value.replace('$', ''));
+            var numPersons = parseInt(document.getElementById('numPersons').value);
+            var tax = 0.1 * price;
+            var totalPrice = price * numPersons + tax;
+            document.getElementById('totalPrice').value = '$' + totalPrice.toFixed(2);
+        }
+
+        // Function to validate booking form
+        function validateBooking() {
+            var name = document.getElementById('name').value;
+            var numPersons = parseInt(document.getElementById('numPersons').value);
+
+            var isValid = true;
+            var errorMessage = '';
+
+            if (!name.trim()) {
+                isValid = false;
+                errorMessage += 'Name is required.\n';
+            }
+
+            if (isNaN(numPersons) || numPersons < 1) {
+                isValid = false;
+                errorMessage += 'Number of persons must be a positive integer.\n';
+            }
+
+            if (!isValid) {
+                alert(errorMessage);
+            }
+
+            return isValid;
+        }
+
+        // Function to display booking history
+        function displayBookingHistory() {
+            var bookingHistoryTable = document.getElementById('bookingHistoryTable');
+            bookingHistoryTable.innerHTML = '<tr><th>Flight Name</th><th>Price</th><th>Action</th></tr>';
+
+            // Display booked flights from history
+            previousSearchResults.forEach(searchResult => {
+                var flights = searchResult.flights;
+                flights.forEach(flight => {
+                    var row = bookingHistoryTable.insertRow();
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = flight.name;
+                    cell2.innerHTML = '$' + flight.price;
+                    cell3.innerHTML = '<button onclick="cancelBooking(' + flight.flightID + ')">Cancel</button>';
+                });
+            });
+
+            navigateTo('bookingHistoryScreen');
+        }
+
+        // Function to cancel booking
+        function cancelBooking(flightID) {
+            // Implement cancellation logic here
+            alert('Cancellation functionality to be implemented.');
         }
 
         // Initial setup
