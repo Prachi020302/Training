@@ -1,0 +1,88 @@
+5(1):
+// Function Expression
+var calculateCircleArea = function(radius) {
+    return Math.PI * radius * radius;
+};
+
+// Usage
+var radius = 5;
+var area = calculateCircleArea(radius);
+console.log("Area of the circle with radius", radius, "is", area);
+
+5(2):
+// Function Constructor
+function Rectangle(length, width) {
+    this.length = length;
+    this.width = width;
+    this.calculateArea = function() {
+        return this.length * this.width;
+    };
+}
+
+// Usage
+var rectangle = new Rectangle(4, 5);
+var area = rectangle.calculateArea();
+console.log("Area of the rectangle is", area);
+
+5(3):
+sayHello(); // This will work
+
+function sayHello() {
+    console.log("Hello!");
+}
+
+5(4):
+// Create an employee object
+var employee = {
+    Name: "John Doe",
+    Address: "123 Main St",
+    Designation: "Software Engineer"
+};
+
+// Function to display employee details
+function displayEmployeeDetails() {
+    console.log("Name:", this.Name);
+    console.log("Address:", this.Address);
+    console.log("Designation:", this.Designation);
+}
+
+// Call the function with employee object using call
+displayEmployeeDetails.call(employee);
+
+5(5):
+// Function to display employee details inside another function
+function displayEmployeeDetails() {
+    var employee = arguments[0]; // Get the employee object from arguments
+
+    function display() {
+        console.log("Name:", this.Name);
+        console.log("Address:", this.Address);
+        console.log("Designation:", this.Designation);
+    }
+
+    display.apply(employee); // Call the inner function with employee object using apply
+}
+
+// Create an employee object
+var employee = {
+    Name: "John Doe",
+    Address: "123 Main St",
+    Designation: "Software Engineer"
+};
+
+// Call the function with employee object
+displayEmployeeDetails(employee);
+
+5(6):
+function outerFunction() {
+    var outerVariable = "I am from outer function";
+
+    function innerFunction() {
+        console.log(outerVariable); // Accessing outerVariable from innerFunction
+    }
+
+    return innerFunction; // Returning innerFunction from outerFunction
+}
+
+var innerFunc = outerFunction(); // innerFunc now has access to outerVariable
+innerFunc(); // This will print "I am from outer function"
