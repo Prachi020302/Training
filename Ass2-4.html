@@ -667,3 +667,47 @@
 </body>
 </html>
 
+----------------------------------------
+
+// Function to display booking history
+function displayBookingHistory() {
+    var bookingHistoryTable = document.getElementById('bookingHistoryTable');
+    bookingHistoryTable.innerHTML = '<tr><th>PNR</th><th>Name</th><th>Flight Name</th><th>Total Price</th><th>Number of Persons</th><th>Booking Date</th><th>Departure Date</th><th>Action</th></tr>';
+
+    var bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    bookings.forEach(booking => {
+        var row = bookingHistoryTable.insertRow();
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+        cell1.innerHTML = booking.pnr;
+        cell2.innerHTML = booking.name;
+        cell3.innerHTML = booking.flightName;
+        cell4.innerHTML = booking.totalPrice;
+        cell5.innerHTML = booking.numPersons;
+        cell6.innerHTML = new Date().toLocaleDateString(); // Date of booking
+        cell7.innerHTML = getFlightDepartureDate(booking.flightName); // Departure date of flight
+        cell8.innerHTML = '<button onclick="cancelBooking(\'' + booking.pnr + '\')">Cancel</button>';
+    });
+
+    navigateTo('bookingHistoryScreen');
+}
+
+// Function to get the departure date of the flight
+function getFlightDepartureDate(flightName) {
+    var flight = data.flights.find(f => f.name === flightName);
+    return flight.departureDate;
+}
+
+// Function to cancel booking
+function cancelBooking(pnr) {
+    alert('Booking with PNR ' + pnr + ' has been canceled.');
+    // Additional logic to remove the booking from local storage and update the table if needed
+}
+
+
