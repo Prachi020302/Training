@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drinks Catalog</title>
+<style>
+    .drink-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px;
+        width: 300px;
+        display: inline-block;
+    }
+
+    .drink-card h3 {
+        margin-top: 0;
+    }
+
+    .drink-card img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .cocktail {
+        background-color: lightgreen;
+    }
+
+    .ordinary-drink {
+        background-color: lightcoral;
+    }
+
+    .other-unknown {
+        background-color: lightyellow;
+    }
+</style>
+</head>
+<body>
+    <div id="drinks"></div>
+    <select id="ingredient-select">
+        <option value="">Select Ingredient</option>
+        <option value="Watermelon">Watermelon</option>
+        <option value="Grapefruit Juice">Grapefruit Juice</option>
+        <option value="Mint">Mint</option>
+        <option value="Strawberries">Strawberries</option>
+        <option value="Lemon juice">Lemon juice</option>
+        <option value="Triple sec">Triple sec</option>
+        <option value="Ice">Ice</option>
+        <option value="Lime juice">Lime juice</option>
+        <option value="Tequila">Tequila</option>
+    </select>
+
+    <script>
+        // Fetch data from the API
+        fetch('https://res.cloudinary.com/des3si8bs/raw/upload/v1679912721/drinks_y1vudo.json')
+            .then(response => response.json())
+            .then(data => {
+                const drinks = data.drinks;
+
+                // Function to render drinks
+                function renderDrinks(ingredient) {
+                    const drinksDiv = document.getElementById('drinks');
+                    drinksDiv.innerHTML = '';
+
+                    drinks.forEach(drink => {
+                        if (!ingredient || (drink.strIngredient2 && drink.strIngredient2.toLowerCase() === ingredient.toLowerCase())) {
+                            const drinkCard = document.createElement('div');
+                            drinkCard.classList.add('drink-card');
+
+                            const title = document.createElement('h3');
+                            title.textContent = drink.strDrink;
+                            drinkCard.appendChild(title);
+
+                            const category = drink.strCategory.toLowerCase().replace(' ', '-');
+                            drinkCard.classList.add(category);
+
+                            const image = document.createElement('img');
+                            image.src = drink.strDrinkThumb;
+                            drinkCard.appendChild(image);
+
+                            const instructions = document.createElement('p');
+                            instructions.textContent = drink.strInstructions;
+                            drinkCard.appendChild(instructions);
+
+                            drinksDiv.appendChild(drinkCard);
+                        }
+                    });
+                }
+
+                // Render drinks initially
+                renderDrinks('');
+
+                // Event listener for ingredient selection
+                document.getElementById('ingredient-select').addEventListener('change', function() {
+                    renderDrinks(this.value);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
