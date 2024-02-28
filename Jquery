@@ -25,3 +25,50 @@
     </script>
 </body>
 </html>
+
+-----------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio Button Selection</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+    <label for="php">PHP</label>
+    <input type="radio" id="php" name="technology" value="PHP">
+    <label for="aspnet">ASP.NET</label>
+    <input type="radio" id="aspnet" name="technology" value="ASP.NET">
+    <label for="asp">ASP</label>
+    <input type="radio" id="asp" name="technology" value="ASP">
+    <label for="jsp">JSP</label>
+    <input type="radio" id="jsp" name="technology" value="JSP">
+    <label for="perl">PERL</label>
+    <input type="radio" id="perl" name="technology" value="PERL">
+    <label for="cf">Cold Fusion</label>
+    <input type="radio" id="cf" name="technology" value="Cold Fusion">
+    <label for="other">Other</label>
+    <input type="radio" id="other" name="technology" value="Other">
+
+    <br><br>
+    <span id="selected-tech"></span>
+
+    <script>
+        $(document).ready(function(){
+            $('input[type="radio"]').click(function(){
+                var selectedTech = $(this).val();
+                $('#selected-tech').text("You have selected : " + selectedTech);
+            });
+        });
+    </script>
+</body>
+</html>
+
