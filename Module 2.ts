@@ -85,3 +85,59 @@ inventoryManager.removeProduct('product1');
 
 // Display current inventory
 inventoryManager.displayInventory();
+
+---------------------
+class Product {
+    constructor(public id: number, public name: string, public quantity: number) {}
+
+    // Method to reduce quantity when a purchase is made
+    purchase(quantityToPurchase: number): void {
+        if (quantityToPurchase <= this.quantity) {
+            this.quantity -= quantityToPurchase;
+            console.log(`Purchase successful. Remaining quantity of ${this.name}: ${this.quantity}`);
+            if (this.quantity < 5) {
+                this.raiseReorderRequest();
+            }
+        } else {
+            console.log(`Insufficient quantity of ${this.name} in stock.`);
+        }
+    }
+
+    // Method to raise reorder request
+    raiseReorderRequest(): void {
+        console.log(`Reorder request raised for ${this.name}`);
+        // Additional logic to send reorder request to supplier
+    }
+}
+
+class Inventory {
+    private products: Product[] = [];
+
+    // Method to add a product to inventory
+    addProduct(product: Product): void {
+        this.products.push(product);
+    }
+
+    // Method to find a product by ID
+    findProductById(productId: number): Product | undefined {
+        return this.products.find(product => product.id === productId);
+    }
+}
+
+// Example usage
+const inventory = new Inventory();
+
+// Adding products to inventory
+inventory.addProduct(new Product(1, 'Apple', 10));
+inventory.addProduct(new Product(2, 'Banana', 8));
+inventory.addProduct(new Product(3, 'Orange', 3));
+
+// Making a purchase
+const productIdToPurchase = 2; // Assuming purchase of Banana
+const quantityToPurchase = 5; // Quantity to purchase
+const productToPurchase = inventory.findProductById(productIdToPurchase);
+if (productToPurchase) {
+    productToPurchase.purchase(quantityToPurchase);
+} else {
+    console.log(`Product with ID ${productIdToPurchase} not found.`);
+}
