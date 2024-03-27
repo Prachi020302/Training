@@ -1,0 +1,223 @@
+import { useState } from 'react';
+import './App.css';
+
+function Form() {
+  // Define userType and initial state
+  type userType = {
+    id: number,
+    name: string,
+    email: string,
+    address: string,
+    state: number,
+    city: number,
+    area: number,
+    gender: string,
+    hobby: string[]
+  }
+
+  const initialState: userType = {
+    id: 0,
+    name: "",
+    email: "",
+    address: "",
+    state: 0,
+    city: 0,
+    area: 0,
+    gender: "",
+    hobby: []
+  };
+
+  // State variables
+  const [userform, setUserform] = useState<userType>(initialState);
+  const [userLists, setUserLists] = useState<userType[]>([]);
+  const [nextId, setNextId] = useState(1);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Validation function
+  const validateForm = (): boolean => {
+    let valid = true;
+    const newErrors: { [key: string]: string } = {};
+
+    if (!userform.name) {
+      newErrors['name'] = 'Name is required';
+      valid = false;
+    }
+
+    if (!userform.email) {
+      newErrors['email'] = 'Email is required';
+      valid = false;
+    }
+
+    if (!userform.address) {
+      newErrors['address'] = 'Address is required';
+      valid = false;
+    }
+
+    if (!userform.state) {
+      newErrors['state'] = 'State is required';
+      valid = false;
+    }
+
+    if (!userform.city) {
+      newErrors['city'] = 'City is required';
+      valid = false;
+    }
+
+    if (!userform.area) {
+      newErrors['area'] = 'Area is required';
+      valid = false;
+    }
+
+    if (!userform.gender) {
+      newErrors['gender'] = 'Gender is required';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  // Form input change handlers
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setUserform({ ...userform, [name]: value });
+  };
+
+  // Submit form
+  const handleSubmit = () => {
+    if (!validateForm()) return;
+
+    const newUser: userType = { ...userform, id: nextId };
+    setUserLists([...userLists, newUser]);
+    setNextId(nextId + 1);
+    setUserform(initialState);
+    setErrors({});
+  };
+
+  // Edit user
+  const handleEdit = (user: userType) => {
+    setUserform(user);
+  };
+
+  // Reset form
+  const handleReset = () => {
+    setUserform(initialState);
+    setErrors({});
+  };
+
+  // Delete user
+  const handleDelete = (id: number) => {
+    setUserLists(userLists.filter(user => user.id !== id));
+  };
+
+  return (
+    <>
+      <form>
+        {/* Form fields */}
+        {/* Name */}
+        <div>
+          <label>Name</label>
+          <input type='text' name="name" value={userform.name} onChange={handleInputChange} />
+          <span className='error'>{errors.name}</span>
+        </div>
+        {/* Email */}
+        <div>
+          <label>Email</label>
+          <input type='email' name="email" value={userform.email} onChange={handleInputChange} />
+          <span className='error'>{errors.email}</span>
+        </div>
+        {/* Address */}
+        <div>
+          <label>Address</label>
+          <input type='text' name="address" value={userform.address} onChange={handleInputChange} />
+          <span className='error'>{errors.address}</span>
+        </div>
+        {/* State */}
+        <div>
+          <label>State</label>
+          <select name="state" value={userform.state} onChange={handleInputChange}>
+            <option value="">Select State</option>
+            {/* Options for states */}
+          </select>
+          <span className='error'>{errors.state}</span>
+        </div>
+        {/* City */}
+        <div>
+          <label>City</label>
+          <select name="city" value={userform.city} onChange={handleInputChange}>
+            <option value="">Select City</option>
+            {/* Options for cities */}
+          </select>
+          <span className='error'>{errors.city}</span>
+        </div>
+        {/* Area */}
+        <div>
+          <label>Area</label>
+          <select name="area" value={userform.area} onChange={handleInputChange}>
+            <option value="">Select Area</option>
+            {/* Options for areas */}
+          </select>
+          <span className='error'>{errors.area}</span>
+        </div>
+        {/* Gender */}
+        <div>
+          <label>Gender</label>
+          <input type="radio" name="gender" value="male" checked={userform.gender === 'male'} onChange={handleInputChange} /> Male
+          <input type="radio" name="gender" value="female" checked={userform.gender === 'female'} onChange={handleInputChange} /> Female
+          <span className='error'>{errors.gender}</span>
+        </div>
+        {/* Hobbies */}
+        <div>
+          {/* Checkboxes for hobbies */}
+        </div>
+
+        {/* Buttons */}
+        <div>
+          <button type="button" onClick={handleReset}>Reset</button>
+          <button type="button" onClick={handleSubmit}>Submit</button>
+        </div>
+      </form>
+
+      {/* User List */}
+      <div>User List</div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Area</th>
+            <th>Gender</th>
+            <th>Hobbies</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+                <tbody>
+          {userLists.map((user: userType) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.address}</td>
+              <td>{user.state}</td>
+              <td>{user.city}</td>
+              <td>{user.area}</td>
+              <td>{user.gender}</td>
+              <td>{user.hobby.join(", ")}</td>
+              <td>
+                <button onClick={() => handleEdit(user)}>Edit</button>
+                <button onClick={() => handleDelete(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+export default Form;
+
