@@ -1,0 +1,343 @@
+// import React from 'react';
+import { useState } from 'react';
+import './App.css';
+
+function Form() {
+
+  type userType = {
+    id: number,
+    name: string,
+    email: string,
+    address: string,
+    state: number,
+    city: number,
+    area: number,
+    gender: string,
+    hobbies: []
+
+  }
+
+  const [userform, setUserform] = useState<userType>({
+    id: 0,
+    name: "",
+    email: "",
+    address: "",
+    state: 0,
+    city: 0,
+    area: 0,
+    gender: "",
+    hobbies: []
+  })
+
+
+  // const {name, state, city, gender, hobbies} = userform;
+
+  const handleName = (e: any) => {
+    const { name, value } = e.target;
+    setUserform({ ...userform, name: value });
+  }
+  const handleEmail = (e: any) => {
+    const { name, value } = e.target;
+    setUserform({ ...userform, email: value });
+  }
+  const handleAddress = (e: any) => {
+    const { name, value } = e.target;
+    setUserform({ ...userform, address: value });
+  }
+
+
+  const [cityarr, setCityArr] = useState([{}]);
+  const [areaarr, setAreaArr] = useState([{}]);
+
+  const [userLists, setUserLists] = useState([]);
+
+  const [nextId, setNextId] = useState(1);
+
+  const [errors, setErrors] = useState<{ [key: String]: String }>({});
+
+  const validateForm = (): boolean => {
+    let valid = true;
+    const newErrors: { [key: string]: string } = {};
+
+    if (!userform.name) {
+      newErrors['name'] = 'Name is required';
+      valid = false;
+    }
+
+    else if (userform.name.length < 3) {
+      newErrors['name'] = 'Name should contain more than 3 words';
+      valid = false;
+    }
+
+
+    if (!userform.email) {
+      newErrors['email'] = 'Email is required';
+      valid = false;
+    }
+
+    if (!userform.address) {
+      newErrors['address'] = 'Address is required';
+      valid = false;
+    }
+
+    if (!userform.state) {
+      newErrors['state'] = 'State is required';
+      valid = false;
+    }
+
+    if (!userform.city) {
+      newErrors['city'] = 'City is required';
+      valid = false;
+    }
+
+    if (!userform.area) {
+      newErrors['area'] = 'Area is required';
+      valid = false;
+    }
+
+    if (!userform.gender) {
+      newErrors['gender'] = 'Gender is required';
+      valid = false;
+    }
+
+    if (userform.hobbies.length === 0) {
+      newErrors['hobbies'] = 'Hobbies is required';
+    }
+
+    setErrors(newErrors);
+    return valid;
+  }
+
+  let StateList = [{ "id": 1, "state": "Gujarat" }, { "id": 2, "state": "Maharashtra" }, { "id": 3, "state": "Rajasthan" }];
+  let CityList = [{ "parentid": 1, "cid": 1, "cname": "Ahmedabad" }, { "parentid": 1, "cid": 2, "cname": "Surat" }, { "parentid": 2, "cid": 3, "cname": "Mumbai" }, { "parentid": 2, "cid": 4, "cname": "Pune" }, { "parentid": 3, "cid": 5, "cname": "Jaipur" }, { "parentid": 3, "cid": 6, "cname": "Jodhpur" }]
+
+  let AreaList = [{ "parentid": 1, "aid": 1, "aname": "Maninagar" },
+  { "parentid": 1, "aid": 2, "aname": "CG Road" },
+  { "parentid": 2, "aid": 3, "aname": "Varcha" },
+  { "parentid": 2, "aid": 4, "aname": "Pal Road" },
+  { "parentid": 3, "aid": 5, "aname": "Andheri" },
+  { "parentid": 3, "aid": 6, "aname": "Goregaon" },
+  { "parentid": 4, "aid": 7, "aname": "Osha Ashram" },
+  { "parentid": 4, "aid": 8, "aname": "Empress Garden" },
+  { "parentid": 5, "aid": 9, "aname": "Jhotwara" },
+  { "parentid": 5, "aid": 10, "aname": "Sanganer" },
+  { "parentid": 6, "aid": 11, "aname": "Jawai" },
+  { "parentid": 6, "aid": 12, "aname": "Mount Abu" }
+  ]
+
+
+  const setState = (e: any) => {
+    const { name, value } = e.target;
+
+    setUserform({ ...userform, state: value })
+  }
+
+  const setCity = (e: any) => {
+
+    const { name, value } = e.target;
+    console.log(name, value);
+
+    setUserform({ ...userform, city: value });
+    const cityFilter = CityList.filter((city) => city.parentid == value);
+    console.log(cityFilter);
+
+    setCityArr(cityFilter);
+  }
+
+
+  const setArea = (e: any) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+
+    setUserform({ ...userform, area: value });
+    const areaFilter = AreaList.filter((area) => area.parentid == value);
+    console.log(areaFilter);
+
+
+    setAreaArr(areaFilter);
+  }
+
+  const handleGender = (e: any) => {
+    const { name, value } = e.target
+    console.log(name, value);
+
+    setUserform({ ...userform, [name]: value })
+  }
+
+  const handleUpdate = () => {
+    console.log(userLists);
+
+  }
+
+  const handleReset = () => {
+    console.log("hello");
+    setUserform({
+      id: 0,
+      name: "",
+      email: "",
+      address: "",
+      state: 0,
+      city: 0,
+      area: 0,
+      gender: "",
+      hobbies: []
+    })
+
+  }
+  const handleSubmit = () => {
+    if (!validateForm()) return;
+    console.log(userform);
+    const newUser: userType = { ...userform, id: nextId };
+    setUserLists([...userLists, newUser]);
+    setNextId(nextId + 1);
+    setErrors({});
+
+  }
+
+  const handleEdit = (user: userType) => {
+    console.log(user);
+    setUserform(user);
+    setState(user);
+    setCity(user);
+    setArea(user);
+
+  }
+
+
+  let h = userform.hobbies
+  const handleHobbies = (e: any) => {
+    const { value, checked } = e.target;
+    console.log(`${value} is ${checked}`);
+    if (checked) {
+      // sethobbies([...hobbies, e.target.value]);
+      // console.log(hobbies);
+      h.push(value)
+      setUserform({ ...userform, Hobbies: h });
+    }
+    else {
+      console.log(h);
+      console.log(h.indexOf(value));
+      h.splice(h.indexOf(value));
+      setUserform({ ...userform, Hobbies: h });
+    }
+  }
+  console.log(h);
+
+
+  const handleDelete = (index: number) => {
+    if (confirm("Are you sur, you want to delete this row?")) {
+      setUserLists(userLists.filter((_, i) => i !== index));
+    }
+
+  };
+
+
+  return (
+    <>
+      <form>
+        <div>
+          Name <input type='text' value={userform.name} onChange={(e: any) => handleName(e)} /><br></br>
+          <span style={{ color: "red" }} className='error'>{errors.name}</span>
+        </div><br></br>
+        <div>
+          Email <input type='email' value={userform.email} onChange={(e: any) => handleEmail(e)} /><br></br>
+          <span style={{ color: "red" }} className='error'>{errors.email}</span>
+        </div><br></br>
+        <div>
+          Address <input type='text' value={userform.address} onChange={(e: any) => handleAddress(e)} /><br></br>
+          <span style={{ color: "red" }} className='error'>{errors.address}</span>
+        </div><br></br>
+        <div>
+          State
+          <select name="state" id="state" value={userform.state} onClick={(e) => setCity(e)} onChange={(e) => setState(e)}>
+            <option value="none">Select State</option>
+            {StateList.map((state, index) => (
+              <option value={state.id} key={index}>{state.state}</option>
+            ))}
+          </select><br></br>
+          <span style={{ color: "red" }} className='error'>{errors.state}</span>
+        </div><br></br>
+        <div>
+          City
+          <select name="city" id="city" value={userform.city} onClick={(e) => setArea(e)} >
+            <option value="none">Select City</option>
+            {cityarr.map((city: any, index: any) => (
+              <option value={city.cid} key={index}>{city.cname}</option>
+            ))}
+          </select><br></br>
+          <span style={{ color: "red" }} className='error'>{errors.city}</span>
+        </div><br></br>
+
+        <div>
+          Area
+          <select name="area" id="area" value={userform.area} >
+            <option value="none">Select Area</option>
+            {areaarr.map((area: any, index: any) => (
+              <option value={area.aid} key={index}>{area.aname}</option>
+            ))}
+          </select><br></br>
+          <span style={{ color: "red" }} className='error'>{errors.area}</span>
+        </div><br></br>
+
+        <div>
+          Gender
+          <input type="radio" name="gender" value="male" onChange={(e) => handleGender(e)} /> Male
+          <input type="radio" name="gender" value="female" onChange={(e) => handleGender(e)} /> Female <br></br>
+          <span style={{ color: "red" }} className='error'>{errors.gender}</span>
+        </div><br></br>
+        <div>
+          Hobbies
+          <input type="checkbox" checked={userform.hobbies.includes("swimming")} name="hobbies" value="swimming" onClick={(e) => handleHobbies(e)} /> Swimming
+
+          <input type="checkbox" checked={userform.hobbies.includes("badminton")} name="hobbies" value="badminton" onClick={(e) => handleHobbies(e)} /> Badminton
+
+          <input type="checkbox" checked={userform.hobbies.includes("travelling")} name="hobbies" value="travelling" onClick={(e) => handleHobbies(e)} /> Travelling <br></br>
+          <span style={{ color: "red" }} className='error'>{errors.hobbies}</span>
+        </div><br></br>
+
+        <input type="reset" className="btn btn-success" onClick={handleReset}></input>
+        <button type="button" className="btn btn-primary" onClick={() => handleSubmit()}>Submit</button>
+      </form ><br></br>
+      <div>User List</div><br></br>
+      <table className='table table-striped'>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>State</th>
+          <th>City</th>
+          <th>Area</th>
+          <th>Gender</th>
+          <th>Hobbies</th>
+          <th>Action</th>
+        </tr>
+        <tbody id='table'>
+          {
+            userLists.map((user: userType, index) => {
+              console.log(user);
+
+              return (
+                <tr key={index}>
+                  <td>{user.id}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.address}</td>
+                  <td>{user.state}</td>
+                  <td>{user.city}</td>
+                  <td>{user.area}</td>
+                  <td>{user.gender}</td>
+                  <td>{user.hobbies.join(",")}</td>
+                  <td><button onClick={() => handleEdit(user)}>Edit</button> <button onClick={() => handleDelete(index)}>Delete</button></td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+      </table>
+    </>
+  );
+
+}
+
+export default Form
